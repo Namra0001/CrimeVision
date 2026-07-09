@@ -1,0 +1,16 @@
+CrimeHeadID,CrimeGroupName,Active
+1,Murder,1
+2,Robbery,1
+3,Cyber Fraud,1
+4,Vehicle Theft,1
+5,Chain Snatching,1
+6,Kidnapping,1
+7,Domestic Violence,1
+8,Burglary,1
+9,Drug Case,1
+10,Economic Offence,1
+11,Rioting,1
+12,Assault,1
+13,Missing Person,1
+14,Women Harassment,1
+15,Child Crime,1

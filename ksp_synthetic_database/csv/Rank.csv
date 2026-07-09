@@ -1,0 +1,11 @@
+RankID,RankName,Hierarchy,Active
+1,Constable,1,True
+2,Head Constable,2,True
+3,ASI,3,True
+4,SI,4,True
+5,Inspector,5,True
+6,ACP,6,True
+7,DCP,7,True
+8,SP,8,True
+9,Crime Analyst,9,True
+10,Commissioner,10,True

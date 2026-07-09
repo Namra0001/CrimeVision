@@ -1,0 +1,501 @@
+SectionCode,ActCode,SectionDescription,Active
+SEC1,ACT5,Section 206 of Arms Act,1
+SEC2,ACT1,Section 215 of Indian Penal Code (IPC),1
+SEC3,ACT2,Section 331 of Information Technology Act,1
+SEC4,ACT4,Section 204 of POCSO Act,1
+SEC5,ACT5,Section 126 of Arms Act,1
+SEC6,ACT3,Section 432 of NDPS Act,1
+SEC7,ACT3,Section 229 of NDPS Act,1
+SEC8,ACT4,Section 238 of POCSO Act,1
+SEC9,ACT3,Section 353 of NDPS Act,1
+SEC10,ACT4,Section 346 of POCSO Act,1
+SEC11,ACT5,Section 151 of Arms Act,1
+SEC12,ACT1,Section 121 of Indian Penal Code (IPC),1
+SEC13,ACT2,Section 137 of Information Technology Act,1
+SEC14,ACT2,Section 260 of Information Technology Act,1
+SEC15,ACT5,Section 155 of Arms Act,1
+SEC16,ACT4,Section 103 of POCSO Act,1
+SEC17,ACT5,Section 403 of Arms Act,1
+SEC18,ACT3,Section 464 of NDPS Act,1
+SEC19,ACT2,Section 149 of Information Technology Act,1
+SEC20,ACT2,Section 257 of Information Technology Act,1
+SEC21,ACT3,Section 131 of NDPS Act,1
+SEC22,ACT2,Section 211 of Information Technology Act,1
+SEC23,ACT4,Section 114 of POCSO Act,1
+SEC24,ACT4,Section 382 of POCSO Act,1
+SEC25,ACT1,Section 324 of Indian Penal Code (IPC),1
+SEC26,ACT3,Section 326 of NDPS Act,1
+SEC27,ACT2,Section 184 of Information Technology Act,1
+SEC28,ACT3,Section 495 of NDPS Act,1
+SEC29,ACT4,Section 413 of POCSO Act,1
+SEC30,ACT1,Section 131 of Indian Penal Code (IPC),1
+SEC31,ACT3,Section 350 of NDPS Act,1
+SEC32,ACT5,Section 246 of Arms Act,1
+SEC33,ACT3,Section 339 of NDPS Act,1
+SEC34,ACT5,Section 122 of Arms Act,1
+SEC35,ACT1,Section 253 of Indian Penal Code (IPC),1
+SEC36,ACT5,Section 446 of Arms Act,1
+SEC37,ACT5,Section 260 of Arms Act,1
+SEC38,ACT5,Section 255 of Arms Act,1
+SEC39,ACT4,Section 141 of POCSO Act,1
+SEC40,ACT5,Section 167 of Arms Act,1
+SEC41,ACT5,Section 197 of Arms Act,1
+SEC42,ACT1,Section 281 of Indian Penal Code (IPC),1
+SEC43,ACT5,Section 356 of Arms Act,1
+SEC44,ACT3,Section 404 of NDPS Act,1
+SEC45,ACT5,Section 488 of Arms Act,1
+SEC46,ACT4,Section 434 of POCSO Act,1
+SEC47,ACT1,Section 171 of Indian Penal Code (IPC),1
+SEC48,ACT4,Section 133 of POCSO Act,1
+SEC49,ACT5,Section 386 of Arms Act,1
+SEC50,ACT5,Section 242 of Arms Act,1
+SEC51,ACT3,Section 433 of NDPS Act,1
+SEC52,ACT4,Section 121 of POCSO Act,1
+SEC53,ACT2,Section 289 of Information Technology Act,1
+SEC54,ACT3,Section 239 of NDPS Act,1
+SEC55,ACT3,Section 438 of NDPS Act,1
+SEC56,ACT4,Section 338 of POCSO Act,1
+SEC57,ACT4,Section 427 of POCSO Act,1
+SEC58,ACT1,Section 245 of Indian Penal Code (IPC),1
+SEC59,ACT3,Section 497 of NDPS Act,1
+SEC60,ACT5,Section 438 of Arms Act,1
+SEC61,ACT5,Section 111 of Arms Act,1
+SEC62,ACT1,Section 135 of Indian Penal Code (IPC),1
+SEC63,ACT5,Section 328 of Arms Act,1
+SEC64,ACT3,Section 326 of NDPS Act,1
+SEC65,ACT1,Section 347 of Indian Penal Code (IPC),1
+SEC66,ACT4,Section 395 of POCSO Act,1
+SEC67,ACT1,Section 215 of Indian Penal Code (IPC),1
+SEC68,ACT2,Section 198 of Information Technology Act,1
+SEC69,ACT2,Section 456 of Information Technology Act,1
+SEC70,ACT3,Section 220 of NDPS Act,1
+SEC71,ACT1,Section 287 of Indian Penal Code (IPC),1
+SEC72,ACT4,Section 288 of POCSO Act,1
+SEC73,ACT4,Section 300 of POCSO Act,1
+SEC74,ACT4,Section 186 of POCSO Act,1
+SEC75,ACT5,Section 209 of Arms Act,1
+SEC76,ACT4,Section 258 of POCSO Act,1
+SEC77,ACT1,Section 353 of Indian Penal Code (IPC),1
+SEC78,ACT5,Section 476 of Arms Act,1
+SEC79,ACT3,Section 478 of NDPS Act,1
+SEC80,ACT5,Section 200 of Arms Act,1
+SEC81,ACT1,Section 411 of Indian Penal Code (IPC),1
+SEC82,ACT1,Section 335 of Indian Penal Code (IPC),1
+SEC83,ACT4,Section 107 of POCSO Act,1
+SEC84,ACT1,Section 392 of Indian Penal Code (IPC),1
+SEC85,ACT4,Section 279 of POCSO Act,1
+SEC86,ACT2,Section 312 of Information Technology Act,1
+SEC87,ACT3,Section 423 of NDPS Act,1
+SEC88,ACT5,Section 411 of Arms Act,1
+SEC89,ACT5,Section 398 of Arms Act,1
+SEC90,ACT1,Section 409 of Indian Penal Code (IPC),1
+SEC91,ACT3,Section 163 of NDPS Act,1
+SEC92,ACT1,Section 281 of Indian Penal Code (IPC),1
+SEC93,ACT5,Section 337 of Arms Act,1
+SEC94,ACT3,Section 391 of NDPS Act,1
+SEC95,ACT5,Section 352 of Arms Act,1
+SEC96,ACT5,Section 110 of Arms Act,1
+SEC97,ACT4,Section 404 of POCSO Act,1
+SEC98,ACT1,Section 445 of Indian Penal Code (IPC),1
+SEC99,ACT5,Section 279 of Arms Act,1
+SEC100,ACT4,Section 260 of POCSO Act,1
+SEC101,ACT3,Section 495 of NDPS Act,1
+SEC102,ACT5,Section 271 of Arms Act,1
+SEC103,ACT4,Section 288 of POCSO Act,1
+SEC104,ACT3,Section 128 of NDPS Act,1
+SEC105,ACT5,Section 394 of Arms Act,1
+SEC106,ACT3,Section 447 of NDPS Act,1
+SEC107,ACT2,Section 312 of Information Technology Act,1
+SEC108,ACT1,Section 321 of Indian Penal Code (IPC),1
+SEC109,ACT2,Section 360 of Information Technology Act,1
+SEC110,ACT1,Section 418 of Indian Penal Code (IPC),1
+SEC111,ACT2,Section 339 of Information Technology Act,1
+SEC112,ACT5,Section 110 of Arms Act,1
+SEC113,ACT4,Section 326 of POCSO Act,1
+SEC114,ACT3,Section 457 of NDPS Act,1
+SEC115,ACT4,Section 230 of POCSO Act,1
+SEC116,ACT4,Section 174 of POCSO Act,1
+SEC117,ACT5,Section 167 of Arms Act,1
+SEC118,ACT4,Section 447 of POCSO Act,1
+SEC119,ACT1,Section 143 of Indian Penal Code (IPC),1
+SEC120,ACT2,Section 394 of Information Technology Act,1
+SEC121,ACT4,Section 297 of POCSO Act,1
+SEC122,ACT1,Section 224 of Indian Penal Code (IPC),1
+SEC123,ACT1,Section 406 of Indian Penal Code (IPC),1
+SEC124,ACT3,Section 101 of NDPS Act,1
+SEC125,ACT4,Section 257 of POCSO Act,1
+SEC126,ACT3,Section 452 of NDPS Act,1
+SEC127,ACT4,Section 272 of POCSO Act,1
+SEC128,ACT1,Section 206 of Indian Penal Code (IPC),1
+SEC129,ACT1,Section 179 of Indian Penal Code (IPC),1
+SEC130,ACT5,Section 279 of Arms Act,1
+SEC131,ACT3,Section 173 of NDPS Act,1
+SEC132,ACT4,Section 395 of POCSO Act,1
+SEC133,ACT1,Section 416 of Indian Penal Code (IPC),1
+SEC134,ACT2,Section 355 of Information Technology Act,1
+SEC135,ACT5,Section 342 of Arms Act,1
+SEC136,ACT2,Section 481 of Information Technology Act,1
+SEC137,ACT3,Section 112 of NDPS Act,1
+SEC138,ACT5,Section 457 of Arms Act,1
+SEC139,ACT3,Section 233 of NDPS Act,1
+SEC140,ACT1,Section 278 of Indian Penal Code (IPC),1
+SEC141,ACT1,Section 489 of Indian Penal Code (IPC),1
+SEC142,ACT3,Section 407 of NDPS Act,1
+SEC143,ACT4,Section 387 of POCSO Act,1
+SEC144,ACT3,Section 466 of NDPS Act,1
+SEC145,ACT4,Section 195 of POCSO Act,1
+SEC146,ACT4,Section 172 of POCSO Act,1
+SEC147,ACT3,Section 233 of NDPS Act,1
+SEC148,ACT1,Section 307 of Indian Penal Code (IPC),1
+SEC149,ACT1,Section 391 of Indian Penal Code (IPC),1
+SEC150,ACT2,Section 296 of Information Technology Act,1
+SEC151,ACT5,Section 175 of Arms Act,1
+SEC152,ACT4,Section 496 of POCSO Act,1
+SEC153,ACT3,Section 386 of NDPS Act,1
+SEC154,ACT3,Section 413 of NDPS Act,1
+SEC155,ACT1,Section 325 of Indian Penal Code (IPC),1
+SEC156,ACT1,Section 203 of Indian Penal Code (IPC),1
+SEC157,ACT2,Section 492 of Information Technology Act,1
+SEC158,ACT2,Section 394 of Information Technology Act,1
+SEC159,ACT4,Section 473 of POCSO Act,1
+SEC160,ACT1,Section 190 of Indian Penal Code (IPC),1
+SEC161,ACT4,Section 281 of POCSO Act,1
+SEC162,ACT1,Section 138 of Indian Penal Code (IPC),1
+SEC163,ACT1,Section 485 of Indian Penal Code (IPC),1
+SEC164,ACT1,Section 197 of Indian Penal Code (IPC),1
+SEC165,ACT1,Section 118 of Indian Penal Code (IPC),1
+SEC166,ACT2,Section 128 of Information Technology Act,1
+SEC167,ACT1,Section 110 of Indian Penal Code (IPC),1
+SEC168,ACT2,Section 398 of Information Technology Act,1
+SEC169,ACT4,Section 182 of POCSO Act,1
+SEC170,ACT3,Section 411 of NDPS Act,1
+SEC171,ACT5,Section 266 of Arms Act,1
+SEC172,ACT1,Section 443 of Indian Penal Code (IPC),1
+SEC173,ACT4,Section 460 of POCSO Act,1
+SEC174,ACT3,Section 105 of NDPS Act,1
+SEC175,ACT1,Section 481 of Indian Penal Code (IPC),1
+SEC176,ACT5,Section 246 of Arms Act,1
+SEC177,ACT1,Section 273 of Indian Penal Code (IPC),1
+SEC178,ACT5,Section 333 of Arms Act,1
+SEC179,ACT3,Section 189 of NDPS Act,1
+SEC180,ACT5,Section 246 of Arms Act,1
+SEC181,ACT5,Section 373 of Arms Act,1
+SEC182,ACT2,Section 302 of Information Technology Act,1
+SEC183,ACT5,Section 211 of Arms Act,1
+SEC184,ACT5,Section 333 of Arms Act,1
+SEC185,ACT2,Section 325 of Information Technology Act,1
+SEC186,ACT4,Section 210 of POCSO Act,1
+SEC187,ACT4,Section 205 of POCSO Act,1
+SEC188,ACT5,Section 226 of Arms Act,1
+SEC189,ACT2,Section 373 of Information Technology Act,1
+SEC190,ACT1,Section 316 of Indian Penal Code (IPC),1
+SEC191,ACT3,Section 400 of NDPS Act,1
+SEC192,ACT2,Section 328 of Information Technology Act,1
+SEC193,ACT2,Section 429 of Information Technology Act,1
+SEC194,ACT4,Section 263 of POCSO Act,1
+SEC195,ACT3,Section 440 of NDPS Act,1
+SEC196,ACT2,Section 446 of Information Technology Act,1
+SEC197,ACT4,Section 391 of POCSO Act,1
+SEC198,ACT5,Section 469 of Arms Act,1
+SEC199,ACT2,Section 274 of Information Technology Act,1
+SEC200,ACT5,Section 117 of Arms Act,1
+SEC201,ACT1,Section 188 of Indian Penal Code (IPC),1
+SEC202,ACT2,Section 268 of Information Technology Act,1
+SEC203,ACT3,Section 401 of NDPS Act,1
+SEC204,ACT1,Section 364 of Indian Penal Code (IPC),1
+SEC205,ACT2,Section 117 of Information Technology Act,1
+SEC206,ACT3,Section 203 of NDPS Act,1
+SEC207,ACT5,Section 250 of Arms Act,1
+SEC208,ACT5,Section 387 of Arms Act,1
+SEC209,ACT1,Section 354 of Indian Penal Code (IPC),1
+SEC210,ACT2,Section 487 of Information Technology Act,1
+SEC211,ACT5,Section 140 of Arms Act,1
+SEC212,ACT5,Section 256 of Arms Act,1
+SEC213,ACT3,Section 211 of NDPS Act,1
+SEC214,ACT1,Section 114 of Indian Penal Code (IPC),1
+SEC215,ACT3,Section 483 of NDPS Act,1
+SEC216,ACT3,Section 265 of NDPS Act,1
+SEC217,ACT5,Section 363 of Arms Act,1
+SEC218,ACT2,Section 127 of Information Technology Act,1
+SEC219,ACT3,Section 496 of NDPS Act,1
+SEC220,ACT1,Section 272 of Indian Penal Code (IPC),1
+SEC221,ACT5,Section 169 of Arms Act,1
+SEC222,ACT2,Section 358 of Information Technology Act,1
+SEC223,ACT2,Section 132 of Information Technology Act,1
+SEC224,ACT2,Section 451 of Information Technology Act,1
+SEC225,ACT3,Section 277 of NDPS Act,1
+SEC226,ACT2,Section 383 of Information Technology Act,1
+SEC227,ACT5,Section 252 of Arms Act,1
+SEC228,ACT1,Section 348 of Indian Penal Code (IPC),1
+SEC229,ACT5,Section 310 of Arms Act,1
+SEC230,ACT5,Section 280 of Arms Act,1
+SEC231,ACT1,Section 237 of Indian Penal Code (IPC),1
+SEC232,ACT2,Section 352 of Information Technology Act,1
+SEC233,ACT4,Section 127 of POCSO Act,1
+SEC234,ACT5,Section 416 of Arms Act,1
+SEC235,ACT4,Section 464 of POCSO Act,1
+SEC236,ACT4,Section 486 of POCSO Act,1
+SEC237,ACT5,Section 301 of Arms Act,1
+SEC238,ACT2,Section 155 of Information Technology Act,1
+SEC239,ACT5,Section 105 of Arms Act,1
+SEC240,ACT2,Section 347 of Information Technology Act,1
+SEC241,ACT1,Section 339 of Indian Penal Code (IPC),1
+SEC242,ACT1,Section 459 of Indian Penal Code (IPC),1
+SEC243,ACT1,Section 109 of Indian Penal Code (IPC),1
+SEC244,ACT2,Section 316 of Information Technology Act,1
+SEC245,ACT2,Section 284 of Information Technology Act,1
+SEC246,ACT3,Section 398 of NDPS Act,1
+SEC247,ACT3,Section 383 of NDPS Act,1
+SEC248,ACT3,Section 271 of NDPS Act,1
+SEC249,ACT1,Section 124 of Indian Penal Code (IPC),1
+SEC250,ACT2,Section 241 of Information Technology Act,1
+SEC251,ACT4,Section 234 of POCSO Act,1
+SEC252,ACT3,Section 360 of NDPS Act,1
+SEC253,ACT2,Section 400 of Information Technology Act,1
+SEC254,ACT2,Section 296 of Information Technology Act,1
+SEC255,ACT2,Section 125 of Information Technology Act,1
+SEC256,ACT3,Section 389 of NDPS Act,1
+SEC257,ACT2,Section 381 of Information Technology Act,1
+SEC258,ACT5,Section 380 of Arms Act,1
+SEC259,ACT3,Section 362 of NDPS Act,1
+SEC260,ACT4,Section 314 of POCSO Act,1
+SEC261,ACT2,Section 403 of Information Technology Act,1
+SEC262,ACT2,Section 244 of Information Technology Act,1
+SEC263,ACT1,Section 320 of Indian Penal Code (IPC),1
+SEC264,ACT2,Section 275 of Information Technology Act,1
+SEC265,ACT3,Section 285 of NDPS Act,1
+SEC266,ACT4,Section 436 of POCSO Act,1
+SEC267,ACT1,Section 211 of Indian Penal Code (IPC),1
+SEC268,ACT5,Section 496 of Arms Act,1
+SEC269,ACT1,Section 346 of Indian Penal Code (IPC),1
+SEC270,ACT2,Section 171 of Information Technology Act,1
+SEC271,ACT4,Section 223 of POCSO Act,1
+SEC272,ACT3,Section 409 of NDPS Act,1
+SEC273,ACT3,Section 468 of NDPS Act,1
+SEC274,ACT4,Section 389 of POCSO Act,1
+SEC275,ACT5,Section 327 of Arms Act,1
+SEC276,ACT4,Section 326 of POCSO Act,1
+SEC277,ACT4,Section 308 of POCSO Act,1
+SEC278,ACT4,Section 248 of POCSO Act,1
+SEC279,ACT4,Section 202 of POCSO Act,1
+SEC280,ACT1,Section 306 of Indian Penal Code (IPC),1
+SEC281,ACT1,Section 255 of Indian Penal Code (IPC),1
+SEC282,ACT1,Section 370 of Indian Penal Code (IPC),1
+SEC283,ACT2,Section 419 of Information Technology Act,1
+SEC284,ACT5,Section 311 of Arms Act,1
+SEC285,ACT4,Section 401 of POCSO Act,1
+SEC286,ACT2,Section 309 of Information Technology Act,1
+SEC287,ACT5,Section 190 of Arms Act,1
+SEC288,ACT2,Section 131 of Information Technology Act,1
+SEC289,ACT4,Section 387 of POCSO Act,1
+SEC290,ACT5,Section 201 of Arms Act,1
+SEC291,ACT1,Section 317 of Indian Penal Code (IPC),1
+SEC292,ACT2,Section 336 of Information Technology Act,1
+SEC293,ACT4,Section 148 of POCSO Act,1
+SEC294,ACT3,Section 233 of NDPS Act,1
+SEC295,ACT3,Section 459 of NDPS Act,1
+SEC296,ACT5,Section 231 of Arms Act,1
+SEC297,ACT3,Section 478 of NDPS Act,1
+SEC298,ACT1,Section 283 of Indian Penal Code (IPC),1
+SEC299,ACT2,Section 456 of Information Technology Act,1
+SEC300,ACT5,Section 323 of Arms Act,1
+SEC301,ACT5,Section 356 of Arms Act,1
+SEC302,ACT1,Section 468 of Indian Penal Code (IPC),1
+SEC303,ACT4,Section 178 of POCSO Act,1
+SEC304,ACT2,Section 243 of Information Technology Act,1
+SEC305,ACT2,Section 301 of Information Technology Act,1
+SEC306,ACT3,Section 217 of NDPS Act,1
+SEC307,ACT5,Section 171 of Arms Act,1
+SEC308,ACT2,Section 394 of Information Technology Act,1
+SEC309,ACT5,Section 338 of Arms Act,1
+SEC310,ACT2,Section 141 of Information Technology Act,1
+SEC311,ACT1,Section 424 of Indian Penal Code (IPC),1
+SEC312,ACT2,Section 372 of Information Technology Act,1
+SEC313,ACT3,Section 243 of NDPS Act,1
+SEC314,ACT3,Section 445 of NDPS Act,1
+SEC315,ACT1,Section 103 of Indian Penal Code (IPC),1
+SEC316,ACT3,Section 474 of NDPS Act,1
+SEC317,ACT5,Section 491 of Arms Act,1
+SEC318,ACT3,Section 177 of NDPS Act,1
+SEC319,ACT4,Section 416 of POCSO Act,1
+SEC320,ACT3,Section 437 of NDPS Act,1
+SEC321,ACT4,Section 214 of POCSO Act,1
+SEC322,ACT3,Section 466 of NDPS Act,1
+SEC323,ACT3,Section 273 of NDPS Act,1
+SEC324,ACT1,Section 424 of Indian Penal Code (IPC),1
+SEC325,ACT3,Section 187 of NDPS Act,1
+SEC326,ACT5,Section 285 of Arms Act,1
+SEC327,ACT3,Section 486 of NDPS Act,1
+SEC328,ACT5,Section 456 of Arms Act,1
+SEC329,ACT3,Section 269 of NDPS Act,1
+SEC330,ACT3,Section 120 of NDPS Act,1
+SEC331,ACT5,Section 432 of Arms Act,1
+SEC332,ACT3,Section 214 of NDPS Act,1
+SEC333,ACT4,Section 411 of POCSO Act,1
+SEC334,ACT2,Section 116 of Information Technology Act,1
+SEC335,ACT2,Section 249 of Information Technology Act,1
+SEC336,ACT2,Section 370 of Information Technology Act,1
+SEC337,ACT1,Section 368 of Indian Penal Code (IPC),1
+SEC338,ACT2,Section 481 of Information Technology Act,1
+SEC339,ACT2,Section 347 of Information Technology Act,1
+SEC340,ACT2,Section 454 of Information Technology Act,1
+SEC341,ACT5,Section 440 of Arms Act,1
+SEC342,ACT5,Section 304 of Arms Act,1
+SEC343,ACT3,Section 113 of NDPS Act,1
+SEC344,ACT5,Section 280 of Arms Act,1
+SEC345,ACT1,Section 449 of Indian Penal Code (IPC),1
+SEC346,ACT4,Section 240 of POCSO Act,1
+SEC347,ACT2,Section 337 of Information Technology Act,1
+SEC348,ACT2,Section 461 of Information Technology Act,1
+SEC349,ACT5,Section 145 of Arms Act,1
+SEC350,ACT4,Section 355 of POCSO Act,1
+SEC351,ACT3,Section 373 of NDPS Act,1
+SEC352,ACT1,Section 467 of Indian Penal Code (IPC),1
+SEC353,ACT4,Section 134 of POCSO Act,1
+SEC354,ACT4,Section 187 of POCSO Act,1
+SEC355,ACT4,Section 418 of POCSO Act,1
+SEC356,ACT3,Section 197 of NDPS Act,1
+SEC357,ACT1,Section 120 of Indian Penal Code (IPC),1
+SEC358,ACT3,Section 480 of NDPS Act,1
+SEC359,ACT5,Section 286 of Arms Act,1
+SEC360,ACT3,Section 232 of NDPS Act,1
+SEC361,ACT2,Section 172 of Information Technology Act,1
+SEC362,ACT2,Section 476 of Information Technology Act,1
+SEC363,ACT3,Section 100 of NDPS Act,1
+SEC364,ACT1,Section 419 of Indian Penal Code (IPC),1
+SEC365,ACT4,Section 408 of POCSO Act,1
+SEC366,ACT5,Section 497 of Arms Act,1
+SEC367,ACT4,Section 175 of POCSO Act,1
+SEC368,ACT3,Section 439 of NDPS Act,1
+SEC369,ACT1,Section 230 of Indian Penal Code (IPC),1
+SEC370,ACT4,Section 294 of POCSO Act,1
+SEC371,ACT2,Section 124 of Information Technology Act,1
+SEC372,ACT4,Section 194 of POCSO Act,1
+SEC373,ACT1,Section 133 of Indian Penal Code (IPC),1
+SEC374,ACT4,Section 460 of POCSO Act,1
+SEC375,ACT5,Section 370 of Arms Act,1
+SEC376,ACT4,Section 474 of POCSO Act,1
+SEC377,ACT3,Section 466 of NDPS Act,1
+SEC378,ACT5,Section 419 of Arms Act,1
+SEC379,ACT3,Section 378 of NDPS Act,1
+SEC380,ACT1,Section 445 of Indian Penal Code (IPC),1
+SEC381,ACT3,Section 249 of NDPS Act,1
+SEC382,ACT4,Section 488 of POCSO Act,1
+SEC383,ACT2,Section 281 of Information Technology Act,1
+SEC384,ACT3,Section 218 of NDPS Act,1
+SEC385,ACT2,Section 121 of Information Technology Act,1
+SEC386,ACT3,Section 240 of NDPS Act,1
+SEC387,ACT2,Section 136 of Information Technology Act,1
+SEC388,ACT4,Section 270 of POCSO Act,1
+SEC389,ACT2,Section 500 of Information Technology Act,1
+SEC390,ACT1,Section 213 of Indian Penal Code (IPC),1
+SEC391,ACT4,Section 295 of POCSO Act,1
+SEC392,ACT3,Section 476 of NDPS Act,1
+SEC393,ACT1,Section 359 of Indian Penal Code (IPC),1
+SEC394,ACT1,Section 201 of Indian Penal Code (IPC),1
+SEC395,ACT1,Section 267 of Indian Penal Code (IPC),1
+SEC396,ACT3,Section 180 of NDPS Act,1
+SEC397,ACT2,Section 118 of Information Technology Act,1
+SEC398,ACT3,Section 265 of NDPS Act,1
+SEC399,ACT5,Section 199 of Arms Act,1
+SEC400,ACT3,Section 193 of NDPS Act,1
+SEC401,ACT5,Section 478 of Arms Act,1
+SEC402,ACT4,Section 100 of POCSO Act,1
+SEC403,ACT2,Section 236 of Information Technology Act,1
+SEC404,ACT2,Section 437 of Information Technology Act,1
+SEC405,ACT2,Section 398 of Information Technology Act,1
+SEC406,ACT3,Section 223 of NDPS Act,1
+SEC407,ACT4,Section 319 of POCSO Act,1
+SEC408,ACT2,Section 287 of Information Technology Act,1
+SEC409,ACT5,Section 122 of Arms Act,1
+SEC410,ACT2,Section 375 of Information Technology Act,1
+SEC411,ACT4,Section 300 of POCSO Act,1
+SEC412,ACT5,Section 486 of Arms Act,1
+SEC413,ACT3,Section 237 of NDPS Act,1
+SEC414,ACT1,Section 283 of Indian Penal Code (IPC),1
+SEC415,ACT3,Section 367 of NDPS Act,1
+SEC416,ACT4,Section 164 of POCSO Act,1
+SEC417,ACT4,Section 296 of POCSO Act,1
+SEC418,ACT2,Section 489 of Information Technology Act,1
+SEC419,ACT3,Section 286 of NDPS Act,1
+SEC420,ACT2,Section 340 of Information Technology Act,1
+SEC421,ACT4,Section 145 of POCSO Act,1
+SEC422,ACT3,Section 209 of NDPS Act,1
+SEC423,ACT4,Section 216 of POCSO Act,1
+SEC424,ACT4,Section 103 of POCSO Act,1
+SEC425,ACT2,Section 450 of Information Technology Act,1
+SEC426,ACT2,Section 429 of Information Technology Act,1
+SEC427,ACT1,Section 251 of Indian Penal Code (IPC),1
+SEC428,ACT4,Section 335 of POCSO Act,1
+SEC429,ACT3,Section 384 of NDPS Act,1
+SEC430,ACT4,Section 197 of POCSO Act,1
+SEC431,ACT5,Section 396 of Arms Act,1
+SEC432,ACT5,Section 391 of Arms Act,1
+SEC433,ACT3,Section 445 of NDPS Act,1
+SEC434,ACT1,Section 313 of Indian Penal Code (IPC),1
+SEC435,ACT3,Section 380 of NDPS Act,1
+SEC436,ACT4,Section 341 of POCSO Act,1
+SEC437,ACT5,Section 136 of Arms Act,1
+SEC438,ACT1,Section 378 of Indian Penal Code (IPC),1
+SEC439,ACT4,Section 121 of POCSO Act,1
+SEC440,ACT1,Section 292 of Indian Penal Code (IPC),1
+SEC441,ACT1,Section 419 of Indian Penal Code (IPC),1
+SEC442,ACT3,Section 201 of NDPS Act,1
+SEC443,ACT3,Section 110 of NDPS Act,1
+SEC444,ACT2,Section 416 of Information Technology Act,1
+SEC445,ACT4,Section 492 of POCSO Act,1
+SEC446,ACT3,Section 472 of NDPS Act,1
+SEC447,ACT1,Section 437 of Indian Penal Code (IPC),1
+SEC448,ACT1,Section 235 of Indian Penal Code (IPC),1
+SEC449,ACT3,Section 200 of NDPS Act,1
+SEC450,ACT3,Section 220 of NDPS Act,1
+SEC451,ACT4,Section 110 of POCSO Act,1
+SEC452,ACT4,Section 348 of POCSO Act,1
+SEC453,ACT5,Section 264 of Arms Act,1
+SEC454,ACT5,Section 419 of Arms Act,1
+SEC455,ACT3,Section 377 of NDPS Act,1
+SEC456,ACT2,Section 125 of Information Technology Act,1
+SEC457,ACT1,Section 113 of Indian Penal Code (IPC),1
+SEC458,ACT4,Section 466 of POCSO Act,1
+SEC459,ACT1,Section 435 of Indian Penal Code (IPC),1
+SEC460,ACT3,Section 372 of NDPS Act,1
+SEC461,ACT4,Section 185 of POCSO Act,1
+SEC462,ACT3,Section 127 of NDPS Act,1
+SEC463,ACT5,Section 261 of Arms Act,1
+SEC464,ACT1,Section 261 of Indian Penal Code (IPC),1
+SEC465,ACT1,Section 386 of Indian Penal Code (IPC),1
+SEC466,ACT5,Section 403 of Arms Act,1
+SEC467,ACT3,Section 417 of NDPS Act,1
+SEC468,ACT5,Section 401 of Arms Act,1
+SEC469,ACT3,Section 130 of NDPS Act,1
+SEC470,ACT3,Section 447 of NDPS Act,1
+SEC471,ACT1,Section 475 of Indian Penal Code (IPC),1
+SEC472,ACT3,Section 440 of NDPS Act,1
+SEC473,ACT1,Section 105 of Indian Penal Code (IPC),1
+SEC474,ACT4,Section 109 of POCSO Act,1
+SEC475,ACT3,Section 255 of NDPS Act,1
+SEC476,ACT1,Section 447 of Indian Penal Code (IPC),1
+SEC477,ACT3,Section 290 of NDPS Act,1
+SEC478,ACT3,Section 122 of NDPS Act,1
+SEC479,ACT5,Section 383 of Arms Act,1
+SEC480,ACT2,Section 364 of Information Technology Act,1
+SEC481,ACT5,Section 384 of Arms Act,1
+SEC482,ACT4,Section 127 of POCSO Act,1
+SEC483,ACT5,Section 367 of Arms Act,1
+SEC484,ACT5,Section 159 of Arms Act,1
+SEC485,ACT4,Section 153 of POCSO Act,1
+SEC486,ACT5,Section 280 of Arms Act,1
+SEC487,ACT5,Section 220 of Arms Act,1
+SEC488,ACT2,Section 140 of Information Technology Act,1
+SEC489,ACT1,Section 410 of Indian Penal Code (IPC),1
+SEC490,ACT4,Section 416 of POCSO Act,1
+SEC491,ACT5,Section 448 of Arms Act,1
+SEC492,ACT4,Section 455 of POCSO Act,1
+SEC493,ACT1,Section 338 of Indian Penal Code (IPC),1
+SEC494,ACT1,Section 193 of Indian Penal Code (IPC),1
+SEC495,ACT3,Section 279 of NDPS Act,1
+SEC496,ACT1,Section 183 of Indian Penal Code (IPC),1
+SEC497,ACT5,Section 497 of Arms Act,1
+SEC498,ACT1,Section 418 of Indian Penal Code (IPC),1
+SEC499,ACT5,Section 122 of Arms Act,1
+SEC500,ACT1,Section 438 of Indian Penal Code (IPC),1

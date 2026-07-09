@@ -1,0 +1,11 @@
+CourtID,CourtName,DistrictID,StateID,Active
+1,"District and Sessions Court, Tumakuru",26,1,True
+2,"District and Sessions Court, Gadag",14,1,True
+3,"District and Sessions Court, Yadgir",31,1,True
+4,"District and Sessions Court, Shivamogga",25,1,True
+5,"District and Sessions Court, Uttara Kannada",28,1,True
+6,"District and Sessions Court, Ramanagara",24,1,True
+7,"District and Sessions Court, Vijayanagara",30,1,True
+8,"District and Sessions Court, Mysuru",22,1,True
+9,"District and Sessions Court, Koppal",20,1,True
+10,"District and Sessions Court, Chitradurga",10,1,True

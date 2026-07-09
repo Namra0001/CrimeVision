@@ -1,0 +1,28 @@
+UnitID,UnitName,TypeID,ParentUnit,NationalityID,StateID,DistrictID,Active
+1,Cubbon Park Police Station,1,,1,1,5,True
+2,Ashok Nagar Police Station,1,,1,1,5,True
+3,Madiwala Police Station,1,,1,1,5,True
+4,Whitefield Police Station,1,,1,1,5,True
+5,Electronic City Police Station,1,,1,1,5,True
+6,Hebbal Police Station,1,,1,1,5,True
+7,Jayanagar Police Station,1,,1,1,5,True
+8,Yeshwanthpur Police Station,1,,1,1,5,True
+9,Banashankari Police Station,1,,1,1,5,True
+10,Basavanagudi Police Station,1,,1,1,5,True
+11,Vidhana Soudha Police Station,1,,1,1,5,True
+12,Mysuru South Police Station,1,,1,1,22,True
+13,Mysuru North Police Station,1,,1,1,22,True
+14,Belagavi Rural Police Station,1,,1,1,3,True
+15,Belagavi Market Police Station,1,,1,1,3,True
+16,Hubballi Town Police Station,1,,1,1,13,True
+17,Dharwad Sub Urban Police Station,1,,1,1,13,True
+18,Mangaluru North Police Station,1,,1,1,11,True
+19,Mangaluru South Police Station,1,,1,1,11,True
+20,Udupi Town Police Station,1,,1,1,27,True
+21,Tumakuru Town Police Station,1,,1,1,26,True
+22,Shivamogga Town Police Station,1,,1,1,25,True
+23,Raichur East Police Station,1,,1,1,23,True
+24,Ballari Rural Police Station,1,,1,1,2,True
+25,Bidar Town Police Station,1,,1,1,6,True
+26,Kalaburagi University Police Station,1,,1,1,17,True
+27,Mandya Rural Police Station,1,,1,1,21,True

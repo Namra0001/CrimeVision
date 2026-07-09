@@ -1,0 +1,76 @@
+CrimeSubHeadID,CrimeHeadID,CrimeHeadName,SeqID
+1,1,Murder SubType 1,1
+2,1,Murder SubType 2,2
+3,1,Murder SubType 3,3
+4,1,Murder SubType 4,4
+5,1,Murder SubType 5,5
+6,2,Robbery SubType 6,6
+7,2,Robbery SubType 7,7
+8,2,Robbery SubType 8,8
+9,2,Robbery SubType 9,9
+10,2,Robbery SubType 10,10
+11,3,Cyber Fraud SubType 11,11
+12,3,Cyber Fraud SubType 12,12
+13,3,Cyber Fraud SubType 13,13
+14,3,Cyber Fraud SubType 14,14
+15,3,Cyber Fraud SubType 15,15
+16,4,Vehicle Theft SubType 16,16
+17,4,Vehicle Theft SubType 17,17
+18,4,Vehicle Theft SubType 18,18
+19,4,Vehicle Theft SubType 19,19
+20,4,Vehicle Theft SubType 20,20
+21,5,Chain Snatching SubType 21,21
+22,5,Chain Snatching SubType 22,22
+23,5,Chain Snatching SubType 23,23
+24,5,Chain Snatching SubType 24,24
+25,5,Chain Snatching SubType 25,25
+26,6,Kidnapping SubType 26,26
+27,6,Kidnapping SubType 27,27
+28,6,Kidnapping SubType 28,28
+29,6,Kidnapping SubType 29,29
+30,6,Kidnapping SubType 30,30
+31,7,Domestic Violence SubType 31,31
+32,7,Domestic Violence SubType 32,32
+33,7,Domestic Violence SubType 33,33
+34,7,Domestic Violence SubType 34,34
+35,7,Domestic Violence SubType 35,35
+36,8,Burglary SubType 36,36
+37,8,Burglary SubType 37,37
+38,8,Burglary SubType 38,38
+39,8,Burglary SubType 39,39
+40,8,Burglary SubType 40,40
+41,9,Drug Case SubType 41,41
+42,9,Drug Case SubType 42,42
+43,9,Drug Case SubType 43,43
+44,9,Drug Case SubType 44,44
+45,9,Drug Case SubType 45,45
+46,10,Economic Offence SubType 46,46
+47,10,Economic Offence SubType 47,47
+48,10,Economic Offence SubType 48,48
+49,10,Economic Offence SubType 49,49
+50,10,Economic Offence SubType 50,50
+51,11,Rioting SubType 51,51
+52,11,Rioting SubType 52,52
+53,11,Rioting SubType 53,53
+54,11,Rioting SubType 54,54
+55,11,Rioting SubType 55,55
+56,12,Assault SubType 56,56
+57,12,Assault SubType 57,57
+58,12,Assault SubType 58,58
+59,12,Assault SubType 59,59
+60,12,Assault SubType 60,60
+61,13,Missing Person SubType 61,61
+62,13,Missing Person SubType 62,62
+63,13,Missing Person SubType 63,63
+64,13,Missing Person SubType 64,64
+65,13,Missing Person SubType 65,65
+66,14,Women Harassment SubType 66,66
+67,14,Women Harassment SubType 67,67
+68,14,Women Harassment SubType 68,68
+69,14,Women Harassment SubType 69,69
+70,14,Women Harassment SubType 70,70
+71,15,Child Crime SubType 71,71
+72,15,Child Crime SubType 72,72
+73,15,Child Crime SubType 73,73
+74,15,Child Crime SubType 74,74
+75,15,Child Crime SubType 75,75
