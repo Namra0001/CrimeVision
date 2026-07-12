@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
+  /* LIGHT MODE - KSP Command Center */
+  :root {
+    --background: #F4F7FA;
+    --foreground: #1F2937;
+    
+    --card: #FFFFFF;
+    --card-foreground: #1F2937;
+    
+    --popover: #FFFFFF;
+    --popover-foreground: #1F2937;
+    
+    --primary: #0B3D91;
+    --primary-foreground: #FFFFFF;
+    
+    --secondary: #F1F5F9;
+    --secondary-foreground: #0F172A;
+    
+    --muted: #E2E8F0;
+    --muted-foreground: #64748B;
+    
+    --accent: #D4AF37;
+    --accent-foreground: #1F2937;
+    
+    --destructive: #DC2626;
+    --destructive-foreground: #FFFFFF;
+    
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #0B3D91;
+    --radius: 0.5rem;
+
+    /* Status Colors */
+    --status-safe: #16A34A;
+    --status-moderate: #F59E0B;
+    --status-high-risk: #F97316;
+    --status-critical: #DC2626;
+    --status-info: #2563EB;
+  }
+
+  /* DARK MODE - Command Center */
+  .dark {
+    --background: #0F172A;
+    --foreground: #F8FAFC;
+    
+    --card: #1E293B;
+    --card-foreground: #F8FAFC;
+    
+    --popover: #1E293B;
+    --popover-foreground: #F8FAFC;
+    
+    --primary: #2563EB;
+    --primary-foreground: #FFFFFF;
+    
+    --secondary: #111827;
+    --secondary-foreground: #F8FAFC;
+    
+    --muted: #334155;
+    --muted-foreground: #94A3B8;
+    
+    --accent: #EAB308;
+    --accent-foreground: #0F172A;
+    
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    
+    --border: #334155;
+    --input: #334155;
+    --ring: #2563EB;
+    
+    /* Status Colors (Same for dark mode, slightly tweaked if needed) */
+    --status-safe: #16A34A;
+    --status-moderate: #F59E0B;
+    --status-high-risk: #F97316;
+    --status-critical: #EF4444;
+    --status-info: #3B82F6;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); filter: drop-shadow(0 0 40px rgba(59,130,246,0.8)); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Global Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Dark Mode Scrollbar Styles */
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
