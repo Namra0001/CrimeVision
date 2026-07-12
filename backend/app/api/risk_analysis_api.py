@@ -20,34 +20,67 @@ class RouteRequest(BaseModel):
     to_loc: str
     api_key: Optional[str] = None
 
+import urllib.request
+import urllib.parse
+import json
+
 @router.post("/route")
 def get_route(req: RouteRequest):
     base_lat, base_lng = 15.3173, 75.7139
+    from_lat, from_lng = base_lat, base_lng
+    to_lat, to_lng = base_lat + 0.1, base_lng + 0.1
+    
+    # Geocode 'from'
+    try:
+        from_url = f"https://nominatim.openstreetmap.org/search?q={urllib.parse.quote(req.from_loc)}&format=json&limit=1"
+        req_from = urllib.request.Request(from_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
+        with urllib.request.urlopen(req_from, timeout=5) as response:
+            from_data = json.loads(response.read().decode())
+            if from_data:
+                from_lat, from_lng = float(from_data[0]['lat']), float(from_data[0]['lon'])
+    except Exception as e:
+        print("Geocoding from failed", e)
+        
+    # Geocode 'to'
+    try:
+        to_url = f"https://nominatim.openstreetmap.org/search?q={urllib.parse.quote(req.to_loc)}&format=json&limit=1"
+        req_to = urllib.request.Request(to_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
+        with urllib.request.urlopen(req_to, timeout=5) as response:
+            to_data = json.loads(response.read().decode())
+            if to_data:
+                to_lat, to_lng = float(to_data[0]['lat']), float(to_data[0]['lon'])
+    except Exception as e:
+        print("Geocoding to failed", e)
+        
+    # Get Route from OSRM
+    route_coords = [[from_lat, from_lng], [to_lat, to_lng]] # fallback
+    travel_time = 3600
+    try:
+        osrm_url = f"http://router.project-osrm.org/route/v1/driving/{from_lng},{from_lat};{to_lng},{to_lat}?overview=full&geometries=geojson"
+        req_osrm = urllib.request.Request(osrm_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
+        with urllib.request.urlopen(req_osrm, timeout=5) as response:
+            osrm_data = json.loads(response.read().decode())
+            if osrm_data and 'routes' in osrm_data and len(osrm_data['routes']) > 0:
+                route = osrm_data['routes'][0]
+                travel_time = route.get('duration', 3600)
+                geo_coords = route['geometry']['coordinates']
+                route_coords = [[c[1], c[0]] for c in geo_coords]
+    except Exception as e:
+        print("OSRM routing failed", e)
+        
+    delay = random.randint(300, 900)
+    hotspots = []
+    if len(route_coords) > 10:
+        mid_idx = len(route_coords) // 2
+        hotspots.append(route_coords[mid_idx])
+    
     return {
-        "coordinates": [
-            [base_lat, base_lng],
-            [base_lat + 0.1, base_lng + 0.05],
-            [base_lat + 0.2, base_lng - 0.05],
-            [base_lat + 0.3, base_lng]
-        ],
+        "coordinates": route_coords,
         "summary": {
-            "travelTimeInSeconds": 3600,
-            "trafficDelayInSeconds": 600
+            "travelTimeInSeconds": travel_time,
+            "trafficDelayInSeconds": delay
         },
-        "alternative": {
-            "coordinates": [
-                [base_lat, base_lng],
-                [base_lat + 0.1, base_lng + 0.1],
-                [base_lat + 0.2, base_lng + 0.1],
-                [base_lat + 0.3, base_lng]
-            ],
-            "summary": {
-                "travelTimeInSeconds": 4000
-            }
-        },
-        "trafficHotspots": [
-            [base_lat + 0.15, base_lng + 0.0]
-        ]
+        "trafficHotspots": hotspots
     }
 
 class KpiCardModel(BaseModel):
@@ -265,12 +298,10 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
         elif layer == "traffic":
             for i in range(15):
                 lat, lng = base_lat + r_offset(), base_lng + r_offset()
-                offset_lat = (random.random() - 0.5) * 0.05
-                offset_lng = (random.random() - 0.5) * 0.05
-                line = [[lat, lng], [lat+offset_lat, lng+offset_lng]]
                 features.append({
-                    "id": f"TRF-{i}", "geometry_type": "polyline", "coordinates": line,
-                    "color": "red", "name": f"Severe Congestion", "details": {"Delay": f"{random.randint(10, 45)} mins"}
+                    "id": f"TRF-{i}", "geometry_type": "circle", "coordinates": [lat, lng],
+                    "radius": 1500, "color": "red", "fill_color": "red", "name": f"Severe Congestion",
+                    "details": {"Delay": f"{random.randint(10, 45)} mins", "Impact": "Traffic backed up"}
                 })
         elif layer == "weather":
             for i in range(5):
