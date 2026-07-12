@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 from langchain_community.utilities import SQLDatabase
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -30,11 +31,12 @@ class RAGService:
             print("WARNING: GEMINI_API_KEY not found in .env")
             
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-3.5-flash",
             temperature=0,
             max_retries=0,
             google_api_key=api_key
         )
+            
         self.db = SQLDatabase.from_uri(DB_PATH, sample_rows_in_table_info=0)
         self._initialized = True
 
@@ -77,6 +79,7 @@ class RAGService:
             7. For 'pending' cases, use CaseStatusID IN (1, 4). For 'closed'/'solved', use CaseStatusID = 3.
             8. IMPORTANT: SQLite string comparison is case-sensitive! ALWAYS use `LIKE '%keyword%'` or `UPPER(col) = 'KEYWORD'` for text columns like CrimeGroupName, DistrictName, etc. (e.g. `UPPER(h.CrimeGroupName) LIKE '%MURDER%'`).
             9. The current year is 2024. If the user asks about future years (like 2025), generate SQL for the latest available year in the DB.
+            10. If the user asks for advice or recommendations alongside a data question (e.g., "highest crime and how to decrease it"), IGNORE the advice part for the SQL query. Only write the SQL for the data lookup part.
             
             SQLQuery:"""
         )
@@ -151,6 +154,11 @@ class RAGService:
                 return self._explain_result(question, sql, result, language)
                 
             except Exception as e:
+                import traceback
+                traceback.print_exc()
+                print(f"Error executing AI query: {e}")
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    return "⚠️ **Gemini API Limit Reached!**\n\nYou are using the Free Tier of the Google Gemini API, which allows a maximum of 15 requests per minute. The dashboard has made too many rapid requests. \n\n**Please wait 60 seconds and try your question again.**"
                 current_error = str(e)
                 
         return "The requested information is not available in the current database, or the query could not be processed."
@@ -158,7 +166,13 @@ class RAGService:
     def ingest_dataframe(self, import_pd, source_name):
         pass
 
+    _recommendations_cache = {}
+
     def generate_risk_recommendations(self, layer: str, context_data: str, language: str = 'en') -> List[Dict]:
+        cache_key = f"{layer}_{language}"
+        if cache_key in self._recommendations_cache:
+            return self._recommendations_cache[cache_key]
+
         self._ensure_initialized()
         
         prompt = PromptTemplate.from_template(
@@ -181,13 +195,13 @@ class RAGService:
         chain = prompt | self.llm | StrOutputParser()
         lang_name = "Kannada" if language == 'kn' else "English"
         
-        raw = chain.invoke({
-            "layer": layer,
-            "context_data": context_data,
-            "language": lang_name
-        })
-        
         try:
+            raw = chain.invoke({
+                "layer": layer,
+                "context_data": context_data,
+                "language": lang_name
+            })
+            
             # Clean markdown if present
             cleaned = raw.strip()
             if cleaned.startswith("```json"):
@@ -196,10 +210,24 @@ class RAGService:
                 cleaned = cleaned[3:]
             if cleaned.endswith("```"):
                 cleaned = cleaned[:-3]
-            return json.loads(cleaned.strip())
+            parsed = json.loads(cleaned.strip())
+            if parsed:
+                self._recommendations_cache[cache_key] = parsed
+            return parsed
         except Exception as e:
-            print("Failed to parse LLM recommendations:", e)
-            return []
+            print("Failed to generate or parse LLM recommendations:", e)
+            return [
+                {
+                    "id": "FB1", "type": "Deployment", "title": "Increase Beat Patrols (Fallback)",
+                    "description": "Due to recent trends, increase high-visibility patrols in critical zones. (API Limit Reached)",
+                    "lat": 12.97, "lng": 77.59, "priority": "High", "impact": "Deters street crime"
+                },
+                {
+                    "id": "FB2", "type": "Surveillance", "title": "Upgrade CCTV Infrastructure (Fallback)",
+                    "description": "Identify blind spots and deploy mobile cameras near hotspots. (API Limit Reached)",
+                    "lat": 13.0, "lng": 77.6, "priority": "Medium", "impact": "Improves evidence collection"
+                }
+            ]
 
 rag_service = RAGService()
 

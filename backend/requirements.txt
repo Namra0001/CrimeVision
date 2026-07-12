@@ -6,3 +6,8 @@ pydantic
 python-dotenv
 python-jose[cryptography]
 passlib[bcrypt]
+scikit-learn
+pandas
+numpy
+joblib
+langchain-openai

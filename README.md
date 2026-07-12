@@ -72,4 +72,4 @@ CrimeVision is an advanced, AI-powered predictive policing and analytics platfor
 CrimeVision is designed for law enforcement grade security. All data operations are strictly read-only on the frontend dashboards to prevent accidental deletion. The AI Assistant operates on localized context to prevent sensitive state data leakage. 
 
 ---
-*© 2026 Karnataka State Police - IT Cell Headquarters, Nrupathunga Road, Bengaluru.*
+*© 2026 CrimeVision - IT Cell Headquarters, Surat.*
