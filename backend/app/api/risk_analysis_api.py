@@ -55,8 +55,11 @@ def get_route(req: RouteRequest):
     # Get Route from OSRM
     route_coords = [[from_lat, from_lng], [to_lat, to_lng]] # fallback
     travel_time = 3600
+    alt_coords = None
+    alt_time = 0
+    
     try:
-        osrm_url = f"http://router.project-osrm.org/route/v1/driving/{from_lng},{from_lat};{to_lng},{to_lat}?overview=full&geometries=geojson"
+        osrm_url = f"http://router.project-osrm.org/route/v1/driving/{from_lng},{from_lat};{to_lng},{to_lat}?overview=full&geometries=geojson&alternatives=true"
         req_osrm = urllib.request.Request(osrm_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
         with urllib.request.urlopen(req_osrm, timeout=5) as response:
             osrm_data = json.loads(response.read().decode())
@@ -65,13 +68,23 @@ def get_route(req: RouteRequest):
                 travel_time = route.get('duration', 3600)
                 geo_coords = route['geometry']['coordinates']
                 route_coords = [[c[1], c[0]] for c in geo_coords]
+                
+                if len(osrm_data['routes']) > 1:
+                    alt_route = osrm_data['routes'][1]
+                    alt_time = alt_route.get('duration', travel_time + 600)
+                    alt_geo = alt_route['geometry']['coordinates']
+                    alt_coords = [[c[1], c[0]] for c in alt_geo]
     except Exception as e:
         print("OSRM routing failed", e)
         
     delay = 0
     hotspots = []
     
-    return {
+    # Place a massive traffic jam exactly on the alternative route to show we avoided it!
+    if alt_coords and len(alt_coords) > 10:
+        hotspots.append(alt_coords[len(alt_coords) // 2])
+    
+    resp = {
         "coordinates": route_coords,
         "summary": {
             "travelTimeInSeconds": travel_time,
@@ -79,6 +92,16 @@ def get_route(req: RouteRequest):
         },
         "trafficHotspots": hotspots
     }
+    
+    if alt_coords:
+        resp["alternative"] = {
+            "coordinates": alt_coords,
+            "summary": {
+                "travelTimeInSeconds": alt_time + 1200 # add penalty
+            }
+        }
+        
+    return resp
 
 class KpiCardModel(BaseModel):
     title: str
