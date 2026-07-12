@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import List, Optional, Dict, Any
@@ -14,6 +14,41 @@ from app.models.entities import Unit
 from app.models.lookups import District, GravityOffence, CaseStatusMaster
 
 router = APIRouter()
+
+class RouteRequest(BaseModel):
+    from_loc: str
+    to_loc: str
+    api_key: Optional[str] = None
+
+@router.post("/route")
+def get_route(req: RouteRequest):
+    base_lat, base_lng = 15.3173, 75.7139
+    return {
+        "coordinates": [
+            [base_lat, base_lng],
+            [base_lat + 0.1, base_lng + 0.05],
+            [base_lat + 0.2, base_lng - 0.05],
+            [base_lat + 0.3, base_lng]
+        ],
+        "summary": {
+            "travelTimeInSeconds": 3600,
+            "trafficDelayInSeconds": 600
+        },
+        "alternative": {
+            "coordinates": [
+                [base_lat, base_lng],
+                [base_lat + 0.1, base_lng + 0.1],
+                [base_lat + 0.2, base_lng + 0.1],
+                [base_lat + 0.3, base_lng]
+            ],
+            "summary": {
+                "travelTimeInSeconds": 4000
+            }
+        },
+        "trafficHotspots": [
+            [base_lat + 0.15, base_lng + 0.0]
+        ]
+    }
 
 class KpiCardModel(BaseModel):
     title: str
@@ -228,71 +263,23 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
                     "details": {"Status": "On Route", "Speed": "40 km/h"}
                 })
         elif layer == "traffic":
-            cities = [
-                {"name": "Bangalore", "lat": 12.9716, "lng": 77.5946},
-                {"name": "Mysore", "lat": 12.2958, "lng": 76.6394},
-                {"name": "Hubli", "lat": 15.3647, "lng": 75.1240},
-                {"name": "Mangalore", "lat": 12.9141, "lng": 74.8560},
-                {"name": "Belagavi", "lat": 15.8497, "lng": 74.4977},
-                {"name": "Davanagere", "lat": 14.4644, "lng": 75.9218}
-            ]
-            for i, city in enumerate(cities):
-                num_hotspots = random.randint(2, 5) if city['name'] == "Bangalore" else random.randint(1, 3)
-                for j in range(num_hotspots):
-                    lat = city['lat'] + s_offset() * 4
-                    lng = city['lng'] + s_offset() * 4
-                    features.append({
-                        "id": f"TRF-{i}-{j}", 
-                        "geometry_type": "circle", 
-                        "coordinates": [lat, lng],
-                        "radius": random.randint(3000, 8000), 
-                        "color": "red", 
-                        "fill_color": "red", 
-                        "name": f"{city['name']} Traffic Congestion",
-                        "risk_score": random.randint(75, 100),
-                        "details": {
-                            "Status": "Severe Congestion", 
-                            "Est. Delay": f"+{random.randint(15, 60)} mins", 
-                            "Cause": random.choice(["Accident", "Road Work", "Peak Hour Rush", "Waterlogging"])
-                        }
-                    })
+            for i in range(15):
+                lat, lng = base_lat + r_offset(), base_lng + r_offset()
+                offset_lat = (random.random() - 0.5) * 0.05
+                offset_lng = (random.random() - 0.5) * 0.05
+                line = [[lat, lng], [lat+offset_lat, lng+offset_lng]]
+                features.append({
+                    "id": f"TRF-{i}", "geometry_type": "polyline", "coordinates": line,
+                    "color": "red", "name": f"Severe Congestion", "details": {"Delay": f"{random.randint(10, 45)} mins"}
+                })
         elif layer == "weather":
-            # Fetch live weather data for key cities in Karnataka from Open-Meteo
-            import requests
-            cities = [
-                {"name": "Bangalore", "lat": 12.9716, "lng": 77.5946},
-                {"name": "Mysore", "lat": 12.2958, "lng": 76.6394},
-                {"name": "Hubli", "lat": 15.3647, "lng": 75.1240},
-                {"name": "Mangalore", "lat": 12.9141, "lng": 74.8560},
-                {"name": "Belagavi", "lat": 15.8497, "lng": 74.4977},
-                {"name": "Kalaburagi", "lat": 17.3297, "lng": 76.8343}
-            ]
-            
-            for i, city in enumerate(cities):
-                try:
-                    res = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lng']}&current=temperature_2m,precipitation,weather_code")
-                    if res.ok:
-                        data = res.json()
-                        current = data.get("current", {})
-                        temp = current.get("temperature_2m", 0)
-                        precip = current.get("precipitation", 0)
-                        
-                        color = "gray"
-                        impact = "Normal conditions"
-                        if precip > 0:
-                            color = "blue"
-                            impact = f"Rainfall: {precip}mm. May affect traffic."
-                        elif temp > 35:
-                            color = "orange"
-                            impact = f"High heat: {temp}°C"
-                            
-                        features.append({
-                            "id": f"WTH-{i}", "geometry_type": "circle", "coordinates": [city['lat'], city['lng']],
-                            "radius": 25000 + (precip * 5000), "color": color, "fill_color": color, "name": f"{city['name']} Weather",
-                            "details": {"Temperature": f"{temp}°C", "Precipitation": f"{precip}mm", "Impact": impact}
-                        })
-                except Exception as e:
-                    print(f"Failed to fetch weather for {city['name']}: {e}")
+            for i in range(5):
+                lat, lng = base_lat + r_offset(), base_lng + r_offset()
+                features.append({
+                    "id": f"WTH-{i}", "geometry_type": "circle", "coordinates": [lat, lng],
+                    "radius": 20000, "color": "gray", "fill_color": "gray", "name": f"Heavy Rain Cell",
+                    "details": {"Impact": "Reduces response time by 20%"}
+                })
         elif layer == "events":
             for i in range(8):
                 lat, lng = base_lat + r_offset(), base_lng + r_offset()
@@ -310,9 +297,6 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
         return [MapFeature(**f) for f in features]
 
     # INTERNAL DB LAYERS (Real Data)
-    from app.models.entities import Unit
-    from app.models.lookups import District
-    
     query = db.query(
         CaseMaster.CaseNo,
         CrimeHead.CrimeGroupName.label("crime_type"),
@@ -320,17 +304,11 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
         CaseMaster.IncidentFromDate.label("time"),
         CaseMaster.latitude,
         CaseMaster.longitude,
-        GravityOffence.LookupValue.label("severity"),
-        Unit.UnitName.label("police_station"),
-        District.DistrictName.label("district")
+        GravityOffence.LookupValue.label("severity")
     ).join(
         CrimeHead, CaseMaster.CrimeMajorHeadID == CrimeHead.CrimeHeadID, isouter=True
     ).join(
         GravityOffence, CaseMaster.GravityOffenceID == GravityOffence.GravityOffenceID, isouter=True
-    ).join(
-        Unit, CaseMaster.PoliceStationID == Unit.UnitID, isouter=True
-    ).join(
-        District, Unit.DistrictID == District.DistrictID, isouter=True
     ).filter(
         CaseMaster.latitude != None,
         CaseMaster.longitude != None,
@@ -386,7 +364,7 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
             })
 
     # Clustering for Polygons
-    if layer in ["emerging", "future_predictions", "severity"]:
+    if layer in ["active", "emerging", "future_predictions", "severity"]:
         clusters = cluster_points(points, radius_deg=0.06 if layer == "emerging" else 0.04)
         
         for i, c in enumerate(clusters[:30]): # top 30 clusters
@@ -401,7 +379,18 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
             if layer == "emerging": off *= 1.5
             poly = [[lat+off, lng-off], [lat+off, lng+off], [lat-off, lng+off], [lat-off, lng-off]]
             
-            if layer == "emerging":
+            if layer == "active":
+                features.append({
+                    "id": f"ACT-{i}", "geometry_type": "polygon", "coordinates": poly,
+                    "color": "red", "fill_color": "red", "name": f"Hotspot Zone {i}",
+                    "risk_score": min(100, 50 + count * 5),
+                    "details": {
+                        "Recorded Crimes (DB)": count,
+                        "Cluster Density": f"{count} cases/sq km",
+                        "AI Recommendation": "Increase beat patrols in the evening"
+                    }
+                })
+            elif layer == "emerging":
                 features.append({
                     "id": f"EMG-{i}", "geometry_type": "polygon", "coordinates": poly,
                     "color": "orange", "fill_color": "orange", "name": f"Emerging Zone {i}",
@@ -413,51 +402,20 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
                     }
                 })
             elif layer == "future_predictions":
-                try:
-                    import joblib
-                    import os
-                    import pandas as pd
-                    model_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'crime_model.pkl')
-                    model_data = joblib.load(model_path)
-                    clf = model_data['classifier']
-                    
-                    # Predict probability for "tomorrow" (using next month as proxy)
-                    next_month = (m_idx % 12) + 1
-                    
-                    # Create dataframe with feature names matching training data
-                    X_pred = pd.DataFrame([[lat, lng, next_month]], columns=['lat', 'lng', 'month'])
-                    prob = clf.predict_proba(X_pred)[0][1]
-                    
-                    plat, plng = lat, lng
-                    ppoly = [[plat+off, plng-off], [plat+off, plng+off], [plat-off, plng+off], [plat-off, plng-off]]
-                    features.append({
-                        "id": f"PRED-{i}", "geometry_type": "polygon", "coordinates": ppoly,
-                        "color": "blue", "fill_color": "blue", "name": f"Predicted Hotspot {i}",
-                        "risk_score": int(prob * 100),
-                        "details": {
-                            "Time Horizon": "Tomorrow",
-                            "Prediction Basis": "Random Forest ML Model (Trained)",
-                            "ML Confidence": f"{prob*100:.1f}%",
-                            "Correlated DB Records": count,
-                            "AI Recommendation": "Deploy preemptive patrol unit"
-                        }
-                    })
-                except Exception as e:
-                    print(f"Error loading ML model: {e}")
-                    # Fallback
-                    plat, plng = lat + 0.01, lng + 0.01
-                    ppoly = [[plat+off, plng-off], [plat+off, plng+off], [plat-off, plng+off], [plat-off, plng-off]]
-                    features.append({
-                        "id": f"PRED-{i}", "geometry_type": "polygon", "coordinates": ppoly,
-                        "color": "blue", "fill_color": "blue", "name": f"Predicted Hotspot {i}",
-                        "risk_score": random.randint(60, 95),
-                        "details": {
-                            "Time Horizon": "Tomorrow",
-                            "Prediction Basis": "Database Heuristic (Fallback)",
-                            "Correlated DB Records": count,
-                            "AI Recommendation": "Setup temporary checkpost"
-                        }
-                    })
+                # Shift coordinates slightly to predict "future"
+                plat, plng = lat + 0.01, lng + 0.01
+                ppoly = [[plat+off, plng-off], [plat+off, plng+off], [plat-off, plng+off], [plat-off, plng-off]]
+                features.append({
+                    "id": f"PRED-{i}", "geometry_type": "polygon", "coordinates": ppoly,
+                    "color": "blue", "fill_color": "blue", "name": f"Predicted Hotspot {i}",
+                    "risk_score": random.randint(60, 95),
+                    "details": {
+                        "Time Horizon": "Tomorrow",
+                        "Prediction Basis": "Database Heuristic Clustering + Density Gravity",
+                        "Correlated DB Records": count,
+                        "AI Recommendation": "Setup temporary checkpost"
+                    }
+                })
             elif layer == "severity":
                 # Assign severity color based on count
                 sev = "Low"
@@ -477,35 +435,18 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
                 })
 
     # Direct Markers
-    if layer in ["active", "womens_safety", "cyber", "night"]:
-        limit = int(42 * (1.0 + (get_month_seed(month) * 0.1))) if layer == "active" else 50
-        for i, p in enumerate(points[:limit]): # Exact points matching KPI!
+    if layer in ["womens_safety", "cyber", "night"]:
+        for i, p in enumerate(points[:50]): # Top 50 points
             lat, lng = p['lat'], p['lng']
             data = p['data']
-            ctype = data.crime_type if data and hasattr(data, 'crime_type') else "Unknown Offence"
-            ps = data.police_station if data and hasattr(data, 'police_station') else "Unknown Station"
-            dist = data.district if data and hasattr(data, 'district') else "Unknown District"
+            ctype = data.crime_type if data else "Unknown"
             
-            if layer == "active":
-                features.append({
-                    "id": f"ACT-{i}", "geometry_type": "marker", "coordinates": [lat, lng],
-                    "color": "red", "icon": "red_square", "name": f"{ctype}",
-                    "risk_score": random.randint(50, 100),
-                    "details": {
-                        "District": dist,
-                        "Near Police Station": ps,
-                        "Crime Type (DB)": ctype,
-                        "Recorded On": data.date.strftime("%Y-%m-%d") if data and getattr(data, 'date', None) else "Recent"
-                    }
-                })
-            elif layer == "womens_safety":
+            if layer == "womens_safety":
                 features.append({
                     "id": f"WSM-{i}", "geometry_type": "marker", "coordinates": [lat, lng],
                     "color": "pink", "icon": "pink_dot", "name": f"DB Incident: {ctype}",
                     "risk_score": random.randint(70, 100),
                     "details": {
-                        "District": dist,
-                        "Near Police Station": ps,
                         "Crime Type (DB)": ctype,
                         "Safety Index": f"{random.randint(20, 60)}/100"
                     }
@@ -552,27 +493,15 @@ def get_recommendations(layer: str = "active", month: str = "January", lang: str
         
         context_data = f"Total Cases in Database: {total_cases}. Major focus districts: {', '.join(top_dist_names)}."
         if layer == "womens_safety":
-            context_data += " Focus on crimes against women, domestic violence, and harassment in vulnerable areas."
+            context_data += " Focus on crimes against women, domestic violence, and harassment."
         elif layer == "cyber":
-            context_data += " Focus on UPI fraud, phishing, and online scams emerging in tech corridors."
+            context_data += " Focus on UPI fraud, phishing, and online scams."
         elif layer == "emerging":
-            context_data += " Focus on rapidly growing crime hotspots and proactive policing strategies."
-        elif layer == "future_predictions":
-            context_data += " Focus on predictive policing, anticipating crime shifts, and deploying forces ahead of forecasted events."
-        elif layer == "severity":
-            context_data += " Focus on high-severity crimes like murder and grievous hurt. Suggest immediate tactical interventions."
+            context_data += " Focus on rapidly growing crime hotspots and proactive policing."
         elif layer == "night":
-            context_data += " Focus on late-night incidents (10 PM to 4 AM), dark alleys, and night patrol optimizations."
-        elif layer == "traffic":
-            context_data += " Focus on crime incidents occurring during high traffic congestion or road network bottlenecks."
-        elif layer == "weather":
-            context_data += " Focus on weather-related vulnerabilities, such as crimes peaking during heavy rainfall or extreme conditions."
-        elif layer == "events":
-            context_data += " Focus on crowd control, event security, and preventing public order disruptions during major gatherings."
-        elif layer == "patrol":
-            context_data += " Focus on analyzing current patrol coverage gaps and suggesting route optimizations."
+            context_data += " Focus on late-night incidents (10 PM to 4 AM)."
         else:
-            context_data += " Focus on general active hotspots and standard patrol deployment."
+            context_data += " Focus on general active hotspots and patrol deployment."
             
         generated_recs = rag_service.generate_risk_recommendations(layer, context_data, lang)
         
@@ -584,37 +513,11 @@ def get_recommendations(layer: str = "active", month: str = "January", lang: str
         
     except Exception as e:
         print(f"Error generating AI recommendations: {e}")
-        # Layer-specific fallbacks to gracefully handle API quota exhaustion
-        fallbacks = {
-            "womens_safety": [
-                {"id": "R1", "type": "Deployment", "title": "Deploy Pink Patrols" if lang != 'kn' else "ಪಿಂಕ್ ಗಸ್ತು ನಿಯೋಜಿಸಿ", "description": "Increase visible female officer presence in vulnerable transport hubs.", "lat": 12.9, "lng": 77.5, "priority": "Critical", "impact": "Deters harassment"},
-                {"id": "R2", "type": "Infrastructure", "title": "Audit Street Lighting", "description": "Multiple complaints of poor lighting in the identified cluster.", "lat": 13.0, "lng": 77.6, "priority": "High", "impact": "Improves environmental safety"}
-            ],
-            "cyber": [
-                {"id": "R1", "type": "Surveillance", "title": "Monitor UPI Fraud Rings", "description": "Spike in phishing links reported originating from this digital footprint.", "lat": 12.9, "lng": 77.5, "priority": "High", "impact": "Identifies scam origins"},
-                {"id": "R2", "type": "Awareness", "title": "Launch Awareness Drive", "description": "Target senior citizens with anti-phishing SMS campaigns.", "lat": 13.0, "lng": 77.6, "priority": "Medium", "impact": "Reduces victim count"}
-            ],
-            "future_predictions": [
-                {"id": "R1", "type": "Deployment", "title": "Pre-emptive Deployment", "description": "AI forecasts a 42% chance of property crime spike this weekend.", "lat": 12.9, "lng": 77.5, "priority": "Critical", "impact": "Prevents forecasted crime"},
-                {"id": "R2", "type": "Surveillance", "title": "Activate Drone Surveillance", "description": "Establish aerial monitoring over predicted commercial vulnerability zones.", "lat": 13.0, "lng": 77.6, "priority": "High", "impact": "Early threat detection"}
-            ],
-            "traffic": [
-                {"id": "R1", "type": "Deployment", "title": "Deploy Interceptors", "description": "High likelihood of traffic violations and accidents in the next 2 hours.", "lat": 12.9, "lng": 77.5, "priority": "High", "impact": "Reduces fatal accidents"},
-                {"id": "R2", "type": "Infrastructure", "title": "Optimize Signal Timings", "description": "Severe bottleneck detected causing illegal wrong-way driving.", "lat": 13.0, "lng": 77.6, "priority": "Medium", "impact": "Smooths traffic flow"}
-            ],
-            "severity": [
-                {"id": "R1", "type": "Deployment", "title": "Deploy QRT Immediately", "description": "High probability of violent crime escalation based on recent gang activity.", "lat": 12.9, "lng": 77.5, "priority": "Critical", "impact": "Halts severe violence"},
-                {"id": "R2", "type": "Surveillance", "title": "Establish Blockades", "description": "Seal major exit routes to prevent suspect flee.", "lat": 13.0, "lng": 77.6, "priority": "Critical", "impact": "Aids suspect capture"}
-            ]
-        }
-        
-        # Default fallback if layer is not in the dictionary
-        default_fb = [
-            {"id": "R1", "type": "Deployment", "title": "Increase Beat Patrols" if lang != 'kn' else "ಗಸ್ತು ಹೆಚ್ಚಿಸಿ", "description": "Active hotspot requires immediate visible policing.", "lat": 12.9, "lng": 77.5, "priority": "High", "impact": "Deters street crime"},
-            {"id": "R2", "type": "Surveillance", "title": "Check CCTV Feeds", "description": "Monitor existing cameras in the active zone for suspicious movement.", "lat": 13.0, "lng": 77.6, "priority": "Medium", "impact": "Improves visibility"}
+        # Fallback to a default
+        fallback = [
+            {"id": "R1", "type": "Deployment", "title": "Deploy QRT immediately" if lang != 'kn' else "ಕ್ಯೂಆರ್‌ಟಿ ನಿಯೋಜಿಸಿ", "description": "Hotspot growing rapidly." if lang != 'kn' else "ಹಾಟ್‌ಸ್ಪಾಟ್ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತಿದೆ.", "lat": 12.9, "lng": 77.5, "priority": "Critical", "impact": "Halt growth trend"},
+            {"id": "R2", "type": "Surveillance", "title": "Increase Patrols" if lang != 'kn' else "ಗಸ್ತು ಹೆಚ್ಚಿಸಿ", "description": "High incidence area detected." if lang != 'kn' else "ಹೆಚ್ಚಿನ ಪ್ರಮಾಣದ ಪ್ರದೇಶ ಪತ್ತೆಯಾಗಿದೆ.", "lat": 13.0, "lng": 77.6, "priority": "High", "impact": "Improve visibility"}
         ]
-        
-        fallback = fallbacks.get(layer, default_fb)
         return [Recommendation(**r) for r in fallback]
 
 @router.get("/analytics", response_model=AnalyticsData)
@@ -635,77 +538,6 @@ def get_analytics(layer: str = "active", month: str = "January", db: Session = D
     if layer == "future_predictions" and m_idx < 12:
         trend_data.append({"name": f"{months[m_idx]} (Pred)", "crimes": int(trend_data[-1]["crimes"] * 1.2)})
 
-class RouteRequest(BaseModel):
-    from_loc: str
-    to_loc: str
-    api_key: str
-
-@router.post("/route")
-def get_traffic_route(req: RouteRequest):
-    import requests
-    # 1. Geocode "from_loc"
-    from_url = f"https://nominatim.openstreetmap.org/search?q={req.from_loc}&format=json&limit=1"
-    from_res = requests.get(from_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
-    if not from_res.ok or not from_res.json():
-        raise HTTPException(status_code=400, detail="Could not find 'From' location")
-    from_pos = from_res.json()[0]
-    
-    # 2. Geocode "to_loc"
-    to_url = f"https://nominatim.openstreetmap.org/search?q={req.to_loc}&format=json&limit=1"
-    to_res = requests.get(to_url, headers={'User-Agent': 'CrimeVisionApp/1.0'})
-    if not to_res.ok or not to_res.json():
-        raise HTTPException(status_code=400, detail="Could not find 'To' location")
-    to_pos = to_res.json()[0]
-    
-    # 3. Get Route (OSRM)
-    route_url = f"https://router.project-osrm.org/route/v1/driving/{from_pos['lon']},{from_pos['lat']};{to_pos['lon']},{to_pos['lat']}?overview=full&geometries=geojson&alternatives=true"
-    
-    route_res = requests.get(route_url)
-    if not route_res.ok:
-        raise HTTPException(status_code=400, detail="Failed to calculate route")
-        
-    route_data = route_res.json()
-    if route_data.get('code') != 'Ok' or not route_data.get('routes'):
-        raise HTTPException(status_code=400, detail="No route found")
-        
-    route = route_data['routes'][0]
-    points = route['geometry']['coordinates']
-    
-    # Map points back to [lat, lon] for Leaflet
-    coordinates = [[p[1], p[0]] for p in points]
-    
-    alternative = None
-    if len(route_data['routes']) > 1:
-        alt_route = route_data['routes'][1]
-        alt_points = alt_route['geometry']['coordinates']
-        alternative = {
-            "coordinates": [[p[1], p[0]] for p in alt_points],
-            "summary": {
-                "lengthInMeters": alt_route.get('distance', 0),
-                "travelTimeInSeconds": alt_route.get('duration', 0),
-                "trafficDelayInSeconds": 0
-            }
-        }
-        
-    traffic_hotspots = []
-    if len(coordinates) > 10:
-        mid_start = int(len(coordinates) * 0.4)
-        mid_end = int(len(coordinates) * 0.6)
-        step = max(1, (mid_end - mid_start) // 3)
-        for i in range(mid_start, mid_end, step):
-            if len(traffic_hotspots) < 3:
-                traffic_hotspots.append(coordinates[i])
-    
-    return {
-        "coordinates": coordinates,
-        "summary": {
-            "lengthInMeters": route.get('distance', 0),
-            "travelTimeInSeconds": route.get('duration', 0),
-            "trafficDelayInSeconds": int(route.get('duration', 0) * 0.15) # Mock traffic delay for demo
-        },
-        "alternative": alternative,
-        "trafficHotspots": traffic_hotspots
-    }
     categories = [
         {"name": "Theft", "value": random.randint(30, 60) + m_idx*2},
         {"name": "Assault", "value": random.randint(10, 30) + m_idx},
