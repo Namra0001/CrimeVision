@@ -422,8 +422,10 @@ export function RiskMap({ hotspots, layer, onCompareToggle, routeData }: RiskMap
                 <div className="font-sans text-xs">
                   <div>Route Found</div>
                   <div className="text-muted-foreground">Time: {Math.round(routeData.summary.travelTimeInSeconds / 60)} mins</div>
-                  {routeData.summary.trafficDelayInSeconds > 0 && (
+                  {routeData.summary.trafficDelayInSeconds > 0 ? (
                     <div className="text-red-500">Traffic Delay: +{Math.round(routeData.summary.trafficDelayInSeconds / 60)} mins</div>
+                  ) : (
+                    <div className="text-green-500 font-bold">Traffic: Clear (Low Traffic)</div>
                   )}
                 </div>
               </Tooltip>
@@ -437,6 +439,17 @@ export function RiskMap({ hotspots, layer, onCompareToggle, routeData }: RiskMap
                   Math.floor(routeData.coordinates.length * 0.6)
                 )}
                 pathOptions={{ color: '#ef4444', weight: 6, opacity: 1, dashArray: '6, 8' }}
+              />
+            )}
+
+            {/* Simulated Clear Traffic (Green Dotted Line) */}
+            {routeData.summary.trafficDelayInSeconds === 0 && routeData.coordinates.length > 5 && (
+              <Polyline 
+                positions={routeData.coordinates.slice(
+                  Math.floor(routeData.coordinates.length * 0.3),
+                  Math.floor(routeData.coordinates.length * 0.7)
+                )}
+                pathOptions={{ color: '#10b981', weight: 6, opacity: 1, dashArray: '6, 8' }}
               />
             )}
             

@@ -68,11 +68,8 @@ def get_route(req: RouteRequest):
     except Exception as e:
         print("OSRM routing failed", e)
         
-    delay = random.randint(300, 900)
+    delay = 0
     hotspots = []
-    if len(route_coords) > 10:
-        mid_idx = len(route_coords) // 2
-        hotspots.append(route_coords[mid_idx])
     
     return {
         "coordinates": route_coords,
