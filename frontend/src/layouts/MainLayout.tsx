@@ -63,7 +63,7 @@ export default function MainLayout() {
 
   const handleFIRClick = async (crimeNo: string) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fir/details/${encodeURIComponent(crimeNo)}`);
+      const res = await fetch(`https://fuzzy-geese-lay.loca.lt/api/fir/details/${encodeURIComponent(crimeNo)}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedFIRData(data);
@@ -91,7 +91,7 @@ export default function MainLayout() {
 
     const delayDebounceFn = setTimeout(() => {
       setIsSearching(true);
-      fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
+      fetch(`https://fuzzy-geese-lay.loca.lt/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => {
           setSearchResults(data);

@@ -36,7 +36,7 @@ export function RiskAnalyticsPanel({ recommendations, layer, summary, currentMon
 
   useEffect(() => {
     if (activeTab === 'analytics') {
-      fetch(`${import.meta.env.VITE_API_URL}/api/risk/analytics?layer=${layer}&lang=${language}`)
+      fetch(`https://fuzzy-geese-lay.loca.lt/api/risk/analytics?layer=${layer}&lang=${language}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => setAnalytics(data && data.trend_data ? data : null))
         .catch(err => {

@@ -142,9 +142,9 @@ export default function RiskAnalysis() {
     }
     try {
       const [sumRes, hotRes, recRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_URL}/api/risk/summary?layer=${layer}&month=${month}&lang=${language}`),
-        fetch(`${import.meta.env.VITE_API_URL}/api/risk/hotspots?layer=${layer}&month=${month}&lang=${language}`),
-        fetch(`${import.meta.env.VITE_API_URL}/api/risk/recommendations?layer=${layer}&month=${month}&lang=${language}`)
+        fetch(`https://fuzzy-geese-lay.loca.lt/api/risk/summary?layer=${layer}&month=${month}&lang=${language}`),
+        fetch(`https://fuzzy-geese-lay.loca.lt/api/risk/hotspots?layer=${layer}&month=${month}&lang=${language}`),
+        fetch(`https://fuzzy-geese-lay.loca.lt/api/risk/recommendations?layer=${layer}&month=${month}&lang=${language}`)
       ]);
       
       const sumData = sumRes.ok ? await sumRes.json() : null;

@@ -62,7 +62,7 @@ export default function Chat() {
   const handleRename = async (id: string, newTitle: string) => {
     if (newTitle.trim()) {
       try {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`, { title: newTitle });
+        await axios.put(`https://fuzzy-geese-lay.loca.lt/api/chat/conversations/${id}`, { title: newTitle });
         fetchConversations();
       } catch (e) {
         console.error('Failed to rename', e);
@@ -98,7 +98,7 @@ export default function Chat() {
   const loadConversation = async (id: string) => {
     setSessionId(id);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`);
+      const res = await axios.get(`https://fuzzy-geese-lay.loca.lt/api/chat/conversations/${id}`);
       setMessages(res.data);
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     } catch (e) {
@@ -279,7 +279,7 @@ export default function Chat() {
   const performDelete = async () => {
     if (!deleteConfirmId) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${deleteConfirmId}`);
+      await axios.delete(`https://fuzzy-geese-lay.loca.lt/api/chat/conversations/${deleteConfirmId}`);
       fetchConversations();
       if (sessionId === deleteConfirmId) createNewChat();
     } catch (error) {
@@ -291,7 +291,7 @@ export default function Chat() {
   const togglePin = async (id: string, currentPin: boolean, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`, {
+      await axios.put(`https://fuzzy-geese-lay.loca.lt/api/chat/conversations/${id}`, {
         is_pinned: !currentPin
       });
       fetchConversations();

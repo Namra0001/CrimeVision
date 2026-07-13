@@ -28,7 +28,7 @@ export default function TrendAlerts() {
     setSelectedAlert(alert);
     setDetailsLoading(true);
     setActiveTab('Overview');
-    fetch(`${import.meta.env.VITE_API_URL}/api/alerts/${alert.id}/details`)
+    fetch(`https://fuzzy-geese-lay.loca.lt/api/alerts/${alert.id}/details`)
       .then(res => res.json())
       .then(data => {
         setAlertDetails(data);

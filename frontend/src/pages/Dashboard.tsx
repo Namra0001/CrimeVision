@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
+    fetch(`https://fuzzy-geese-lay.loca.lt/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
       .then(res => res.json())
       .then(apiData => {
         setData(apiData);

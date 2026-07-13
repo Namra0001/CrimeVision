@@ -197,7 +197,7 @@ export default function Heatmap() {
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/map/police-stations?district_id=${selectedDistrict}`)
+      fetch(`https://fuzzy-geese-lay.loca.lt/api/map/police-stations?district_id=${selectedDistrict}`)
         .then(res => res.json())
         .then(data => setPoliceStations(data))
         .catch(err => console.error("Error fetching police stations", err));
@@ -213,7 +213,7 @@ export default function Heatmap() {
   }, [selectedDistrict, selectedStation, selectedCrimeType, selectedSeverity, selectedStatus, highRiskOnly, viewMode, fromDate, toDate, refreshCount]);
 
   const fetchData = () => {
-    let url = new URL(`${import.meta.env.VITE_API_URL}/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
+    let url = new URL(`https://fuzzy-geese-lay.loca.lt/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     
     if (viewMode === 'cluster') {

@@ -73,7 +73,7 @@ export default function DistrictDrilldown() {
     if (!selectedDistrict) return;
     
     setStatsLoading(true);
-    let url = `${import.meta.env.VITE_API_URL}/api/district/stats?district_id=${selectedDistrict.id}`;
+    let url = `https://fuzzy-geese-lay.loca.lt/api/district/stats?district_id=${selectedDistrict.id}`;
     if (selectedStation) {
       url += `&station_id=${selectedStation.id}`;
     }
@@ -90,7 +90,7 @@ export default function DistrictDrilldown() {
       });
       
     setInsightsLoading(true);
-    let insightUrl = `${import.meta.env.VITE_API_URL}/api/district/advanced-insights?district_id=${selectedDistrict.id}&lang=${language}`;
+    let insightUrl = `https://fuzzy-geese-lay.loca.lt/api/district/advanced-insights?district_id=${selectedDistrict.id}&lang=${language}`;
     if (selectedStation) {
       insightUrl += `&station_id=${selectedStation.id}`;
     }
@@ -106,7 +106,7 @@ export default function DistrictDrilldown() {
       });
       
     if (selectedStation) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/district/personnel?station_id=${selectedStation.id}`)
+      fetch(`https://fuzzy-geese-lay.loca.lt/api/district/personnel?station_id=${selectedStation.id}`)
         .then(res => res.json())
         .then(data => setPersonnel(data));
     } else {
