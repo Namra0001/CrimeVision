@@ -263,9 +263,8 @@ def get_dashboard_stats(year: Optional[str] = 'All', district: Optional[str] = '
         {language_instruction}
         Output ONLY valid JSON.
         """
-        # Bypassed LLM for instant hackathon demo speed
-        raise Exception("LLM bypassed for speed")
-        # llm_response = rag_service.llm.invoke(prompt)
+        # Try LLM call (will fail fast if out of quota due to max_retries=0)
+        llm_response = rag_service.llm.invoke(prompt)
         
         # Clean markdown if present
         cleaned_json = llm_response.content.strip()

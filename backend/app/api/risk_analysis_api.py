@@ -554,9 +554,7 @@ def get_recommendations(layer: str = "active", month: str = "January", lang: str
         else:
             context_data += " Focus on general active hotspots and patrol deployment."
             
-        # Bypassed LLM for instant hackathon demo speed
-        raise Exception("LLM bypassed for speed")
-        # generated_recs = rag_service.generate_risk_recommendations(layer, context_data, lang)
+        generated_recs = rag_service.generate_risk_recommendations(layer, context_data, lang)
         
         if not generated_recs or len(generated_recs) != 2:
             raise Exception("LLM did not return exactly 2 recommendations")
