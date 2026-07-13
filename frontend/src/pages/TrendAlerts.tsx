@@ -28,7 +28,7 @@ export default function TrendAlerts() {
     setSelectedAlert(alert);
     setDetailsLoading(true);
     setActiveTab('Overview');
-    fetch(`http://localhost:8000/api/alerts/${alert.id}/details`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/alerts/${alert.id}/details`)
       .then(res => res.json())
       .then(data => {
         setAlertDetails(data);
@@ -46,7 +46,7 @@ export default function TrendAlerts() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/alerts')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/alerts')
       .then(res => res.json())
       .then(data => {
         const localStatuses = JSON.parse(localStorage.getItem('alertStatuses') || '{}');

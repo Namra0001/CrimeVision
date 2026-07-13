@@ -172,7 +172,7 @@ export default function Heatmap() {
   const defaultZoom = 7;
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/map/district')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/district')
       .then(res => res.json())
       .then(data => {
         setDistricts(data);
@@ -185,11 +185,11 @@ export default function Heatmap() {
       })
       .catch(err => console.error("Error fetching districts", err));
       
-    fetch('http://localhost:8000/api/map/crime-types')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/crime-types')
       .then(res => res.json())
       .then(data => setCrimeTypes(data))
       .catch(err => console.error("Error fetching crime types", err));
-    fetch('http://localhost:8000/api/map/notifications')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -197,7 +197,7 @@ export default function Heatmap() {
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch(`http://localhost:8000/api/map/police-stations?district_id=${selectedDistrict}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/map/police-stations?district_id=${selectedDistrict}`)
         .then(res => res.json())
         .then(data => setPoliceStations(data))
         .catch(err => console.error("Error fetching police stations", err));
@@ -213,7 +213,7 @@ export default function Heatmap() {
   }, [selectedDistrict, selectedStation, selectedCrimeType, selectedSeverity, selectedStatus, highRiskOnly, viewMode, fromDate, toDate, refreshCount]);
 
   const fetchData = () => {
-    let url = new URL(`http://localhost:8000/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
+    let url = new URL(`${import.meta.env.VITE_API_URL}/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     
     if (viewMode === 'cluster') {
@@ -240,7 +240,7 @@ export default function Heatmap() {
   };
 
   const fetchSummary = () => {
-    let url = new URL('http://localhost:8000/api/map/summary');
+    let url = new URL((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/summary');
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     if (selectedStation) url.searchParams.append('station_id', selectedStation);
     if (selectedCrimeType) url.searchParams.append('crime_type', selectedCrimeType);

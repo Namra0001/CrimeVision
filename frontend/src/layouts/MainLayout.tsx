@@ -63,7 +63,7 @@ export default function MainLayout() {
 
   const handleFIRClick = async (crimeNo: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/fir/details/${encodeURIComponent(crimeNo)}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fir/details/${encodeURIComponent(crimeNo)}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedFIRData(data);
@@ -76,7 +76,7 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/map/notifications')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -91,7 +91,7 @@ export default function MainLayout() {
 
     const delayDebounceFn = setTimeout(() => {
       setIsSearching(true);
-      fetch(`http://localhost:8000/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => {
           setSearchResults(data);

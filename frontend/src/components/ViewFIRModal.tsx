@@ -18,7 +18,7 @@ export default function ViewFIRModal({ isOpen, onClose, firData }: ViewFIRModalP
   const handleSolve = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/fir/solve/${encodeURIComponent(firData.crime_no)}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/fir/solve/${encodeURIComponent(firData.crime_no)}`, {
         method: 'POST',
       });
 

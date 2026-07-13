@@ -34,7 +34,7 @@ export default function Dashboard() {
   const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/dashboard/filters')
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/dashboard/filters')
       .then(res => res.json())
       .then(data => {
         setFilterOptions({ districts: data.districts, years: ['All', ...data.years] });
@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:8000/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
       .then(res => res.json())
       .then(apiData => {
         setData(apiData);

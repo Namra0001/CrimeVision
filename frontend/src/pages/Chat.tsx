@@ -62,7 +62,7 @@ export default function Chat() {
   const handleRename = async (id: string, newTitle: string) => {
     if (newTitle.trim()) {
       try {
-        await axios.put(`http://localhost:8000/api/chat/conversations/${id}`, { title: newTitle });
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`, { title: newTitle });
         fetchConversations();
       } catch (e) {
         console.error('Failed to rename', e);
@@ -88,7 +88,7 @@ export default function Chat() {
 
   const fetchConversations = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/chat/conversations');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/chat/conversations');
       setConversations(res.data);
     } catch (e) {
       console.error("Failed to fetch conversations", e);
@@ -98,7 +98,7 @@ export default function Chat() {
   const loadConversation = async (id: string) => {
     setSessionId(id);
     try {
-      const res = await axios.get(`http://localhost:8000/api/chat/conversations/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`);
       setMessages(res.data);
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     } catch (e) {
@@ -175,7 +175,7 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chat/ask', {
+      const response = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/chat/ask', {
         message: userMessage,
         conversation_id: sessionId,
         language: language
@@ -279,7 +279,7 @@ export default function Chat() {
   const performDelete = async () => {
     if (!deleteConfirmId) return;
     try {
-      await axios.delete(`http://localhost:8000/api/chat/conversations/${deleteConfirmId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${deleteConfirmId}`);
       fetchConversations();
       if (sessionId === deleteConfirmId) createNewChat();
     } catch (error) {
@@ -291,7 +291,7 @@ export default function Chat() {
   const togglePin = async (id: string, currentPin: boolean, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await axios.put(`http://localhost:8000/api/chat/conversations/${id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/conversations/${id}`, {
         is_pinned: !currentPin
       });
       fetchConversations();
@@ -311,7 +311,7 @@ export default function Chat() {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/dataset/upload', formData, {
+      const response = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/dataset/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setMessages(prev => [...prev, { 
