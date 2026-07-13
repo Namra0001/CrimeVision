@@ -172,7 +172,7 @@ export default function Heatmap() {
   const defaultZoom = 7;
 
   useEffect(() => {
-    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/map/district')
+    fetch('https://crimevision-api.loca.lt' + '/api/map/district')
       .then(res => res.json())
       .then(data => {
         setDistricts(data);
@@ -185,11 +185,11 @@ export default function Heatmap() {
       })
       .catch(err => console.error("Error fetching districts", err));
       
-    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/map/crime-types')
+    fetch('https://crimevision-api.loca.lt' + '/api/map/crime-types')
       .then(res => res.json())
       .then(data => setCrimeTypes(data))
       .catch(err => console.error("Error fetching crime types", err));
-    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/map/notifications')
+    fetch('https://crimevision-api.loca.lt' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -197,7 +197,7 @@ export default function Heatmap() {
 
   useEffect(() => {
     if (selectedDistrict) {
-      fetch(`https://fuzzy-geese-lay.loca.lt/api/map/police-stations?district_id=${selectedDistrict}`)
+      fetch(`https://crimevision-api.loca.lt/api/map/police-stations?district_id=${selectedDistrict}`)
         .then(res => res.json())
         .then(data => setPoliceStations(data))
         .catch(err => console.error("Error fetching police stations", err));
@@ -213,7 +213,7 @@ export default function Heatmap() {
   }, [selectedDistrict, selectedStation, selectedCrimeType, selectedSeverity, selectedStatus, highRiskOnly, viewMode, fromDate, toDate, refreshCount]);
 
   const fetchData = () => {
-    let url = new URL(`https://fuzzy-geese-lay.loca.lt/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
+    let url = new URL(`https://crimevision-api.loca.lt/api/map/${viewMode === 'cluster' ? 'crime-location' : 'heatmap'}`);
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     
     if (viewMode === 'cluster') {
@@ -240,7 +240,7 @@ export default function Heatmap() {
   };
 
   const fetchSummary = () => {
-    let url = new URL('https://fuzzy-geese-lay.loca.lt' + '/api/map/summary');
+    let url = new URL('https://crimevision-api.loca.lt' + '/api/map/summary');
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     if (selectedStation) url.searchParams.append('station_id', selectedStation);
     if (selectedCrimeType) url.searchParams.append('crime_type', selectedCrimeType);

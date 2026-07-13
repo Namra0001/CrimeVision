@@ -28,7 +28,7 @@ export default function TrendAlerts() {
     setSelectedAlert(alert);
     setDetailsLoading(true);
     setActiveTab('Overview');
-    fetch(`https://fuzzy-geese-lay.loca.lt/api/alerts/${alert.id}/details`)
+    fetch(`https://crimevision-api.loca.lt/api/alerts/${alert.id}/details`)
       .then(res => res.json())
       .then(data => {
         setAlertDetails(data);
@@ -46,7 +46,7 @@ export default function TrendAlerts() {
   };
 
   useEffect(() => {
-    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/alerts')
+    fetch('https://crimevision-api.loca.lt' + '/api/alerts')
       .then(res => res.json())
       .then(data => {
         const localStatuses = JSON.parse(localStorage.getItem('alertStatuses') || '{}');

@@ -34,7 +34,7 @@ export default function Dashboard() {
   const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState(false);
 
   useEffect(() => {
-    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/dashboard/filters')
+    fetch('https://crimevision-api.loca.lt' + '/api/dashboard/filters')
       .then(res => res.json())
       .then(data => {
         setFilterOptions({ districts: data.districts, years: ['All', ...data.years] });
@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://fuzzy-geese-lay.loca.lt/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
+    fetch(`https://crimevision-api.loca.lt/api/dashboard/stats?year=${selectedYear}&district=${selectedDistrict}&lang=${language}&_t=${refreshCount}`)
       .then(res => res.json())
       .then(apiData => {
         setData(apiData);
