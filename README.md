@@ -71,5 +71,8 @@ CrimeVision is an advanced, AI-powered predictive policing and analytics platfor
 
 CrimeVision is designed for law enforcement grade security. All data operations are strictly read-only on the frontend dashboards to prevent accidental deletion. The AI Assistant operates on localized context to prevent sensitive state data leakage. 
 
+## Project Deploy Link: http://crime-vision-six.vercel.app
+## Project Video Link: https://www.youtube.com/watch?v=64YQuT57EY4
+
 ---
 *© 2026 CrimeVision - IT Cell Headquarters, Surat.*
