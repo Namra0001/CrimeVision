@@ -34,7 +34,7 @@ export default function Register() {
       };
       const role = roleMap[position] || 'constable';
 
-      const response = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/register', {
+      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role })
@@ -61,7 +61,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/verify-registration', {
+      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/verify-registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp })

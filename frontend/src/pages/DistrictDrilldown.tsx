@@ -54,7 +54,7 @@ export default function DistrictDrilldown() {
   const [expandedFeature, setExpandedFeature] = useState<number | null>(1); // 1 = Health Score open by default
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/district/hierarchy')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/district/hierarchy')
       .then(res => res.json())
       .then(data => {
         setHierarchy(data);

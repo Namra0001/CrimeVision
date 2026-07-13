@@ -34,7 +34,7 @@ export default function Dashboard() {
   const [isDistrictDropdownOpen, setIsDistrictDropdownOpen] = useState(false);
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/dashboard/filters')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/dashboard/filters')
       .then(res => res.json())
       .then(data => {
         setFilterOptions({ districts: data.districts, years: ['All', ...data.years] });

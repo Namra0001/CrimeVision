@@ -52,7 +52,7 @@ export default function RiskAnalysis() {
   useEffect(() => {
     const fetchLatestIntercept = async () => {
       try {
-        const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/alerts/latest-intercept');
+        const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/alerts/latest-intercept');
         if (res.ok) {
           const data = await res.json();
           if (data) {
@@ -109,7 +109,7 @@ export default function RiskAnalysis() {
   const handleRouteRequest = async (from: string, to: string) => {
     setLoading(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/risk/route', {
+      const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/risk/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

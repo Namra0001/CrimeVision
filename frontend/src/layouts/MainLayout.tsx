@@ -76,7 +76,7 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/notifications')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));

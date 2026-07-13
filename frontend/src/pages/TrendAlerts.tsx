@@ -46,7 +46,7 @@ export default function TrendAlerts() {
   };
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/alerts')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/alerts')
       .then(res => res.json())
       .then(data => {
         const localStatuses = JSON.parse(localStorage.getItem('alertStatuses') || '{}');

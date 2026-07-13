@@ -172,7 +172,7 @@ export default function Heatmap() {
   const defaultZoom = 7;
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/district')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/map/district')
       .then(res => res.json())
       .then(data => {
         setDistricts(data);
@@ -185,11 +185,11 @@ export default function Heatmap() {
       })
       .catch(err => console.error("Error fetching districts", err));
       
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/crime-types')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/map/crime-types')
       .then(res => res.json())
       .then(data => setCrimeTypes(data))
       .catch(err => console.error("Error fetching crime types", err));
-    fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/notifications')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -240,7 +240,7 @@ export default function Heatmap() {
   };
 
   const fetchSummary = () => {
-    let url = new URL((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/map/summary');
+    let url = new URL('https://crimevision-aq07.onrender.com' + '/api/map/summary');
     if (selectedDistrict) url.searchParams.append('district_id', selectedDistrict);
     if (selectedStation) url.searchParams.append('station_id', selectedStation);
     if (selectedCrimeType) url.searchParams.append('crime_type', selectedCrimeType);

@@ -88,7 +88,7 @@ export default function Chat() {
 
   const fetchConversations = async () => {
     try {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/chat/conversations');
+      const res = await axios.get('https://crimevision-aq07.onrender.com' + '/api/chat/conversations');
       setConversations(res.data);
     } catch (e) {
       console.error("Failed to fetch conversations", e);
@@ -175,7 +175,7 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/chat/ask', {
+      const response = await axios.post('https://crimevision-aq07.onrender.com' + '/api/chat/ask', {
         message: userMessage,
         conversation_id: sessionId,
         language: language
@@ -311,7 +311,7 @@ export default function Chat() {
     formData.append('file', file);
 
     try {
-      const response = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/dataset/upload', formData, {
+      const response = await axios.post('https://crimevision-aq07.onrender.com' + '/api/dataset/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setMessages(prev => [...prev, { 
