@@ -367,7 +367,7 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
         CaseMaster.latitude > 11.5
     )
 
-    results = query.limit(500).all()
+    results = query.limit(5000).all()
     points = []
 
     for r in results:
