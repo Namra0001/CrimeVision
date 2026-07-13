@@ -7,12 +7,13 @@ import axios from 'axios';
 
 // Bypass localtunnel warning screen for all API requests
 const originalFetch = window.fetch;
-window.fetch = async function () {
-  let [resource, config] = arguments;
-  if (!config) config = {};
-  if (!config.headers) config.headers = {};
-  config.headers['Bypass-Tunnel-Reminder'] = 'true';
-  return await originalFetch(resource, config);
+window.fetch = async function (...args) {
+  let [resource, config] = args;
+  config = config || {};
+  const headers = new Headers(config.headers || {});
+  headers.set('Bypass-Tunnel-Reminder', 'true');
+  config.headers = headers;
+  return originalFetch(resource, config);
 };
 axios.defaults.headers.common['Bypass-Tunnel-Reminder'] = 'true';
 
