@@ -263,8 +263,9 @@ def get_dashboard_stats(year: Optional[str] = 'All', district: Optional[str] = '
         {language_instruction}
         Output ONLY valid JSON.
         """
-        # Try LLM call (will fail fast if out of quota due to max_retries=0)
-        llm_response = rag_service.llm.invoke(prompt)
+        # Bypassed LLM for instant hackathon demo speed
+        raise Exception("LLM bypassed for speed")
+        # llm_response = rag_service.llm.invoke(prompt)
         
         # Clean markdown if present
         cleaned_json = llm_response.content.strip()
@@ -281,6 +282,7 @@ def get_dashboard_stats(year: Optional[str] = 'All', district: Optional[str] = '
         ai_insights["recommendations"] = ai_data.get("recommendations", [])
     except Exception as e:
         print(f"Fell back to dynamic dataset summary due to AI quota: {e}")
+    finally:
         # Dynamic fallback using actual dataset values
         ai_insights = {
             "system_health": "99.9% Online",

@@ -367,7 +367,7 @@ def get_hotspots(layer: str = "active", month: str = "January", db: Session = De
         CaseMaster.latitude > 11.5
     )
 
-    results = query.limit(5000).all()
+    results = query.limit(500).all()
     points = []
 
     for r in results:
@@ -554,7 +554,9 @@ def get_recommendations(layer: str = "active", month: str = "January", lang: str
         else:
             context_data += " Focus on general active hotspots and patrol deployment."
             
-        generated_recs = rag_service.generate_risk_recommendations(layer, context_data, lang)
+        # Bypassed LLM for instant hackathon demo speed
+        raise Exception("LLM bypassed for speed")
+        # generated_recs = rag_service.generate_risk_recommendations(layer, context_data, lang)
         
         if not generated_recs or len(generated_recs) != 2:
             raise Exception("LLM did not return exactly 2 recommendations")
