@@ -46,7 +46,7 @@ export default function TrendAlerts() {
   };
 
   useEffect(() => {
-    fetch('https://crimevision-aq07.onrender.com' + '/api/alerts')
+    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/alerts')
       .then(res => res.json())
       .then(data => {
         const localStatuses = JSON.parse(localStorage.getItem('alertStatuses') || '{}');

@@ -21,7 +21,7 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/forgot-password', {
+      const response = await fetch('https://fuzzy-geese-lay.loca.lt' + '/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -48,7 +48,7 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/reset-password', {
+      const response = await fetch('https://fuzzy-geese-lay.loca.lt' + '/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp, new_password: newPassword })

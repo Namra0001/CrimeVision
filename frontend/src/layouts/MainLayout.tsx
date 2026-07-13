@@ -76,7 +76,7 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    fetch('https://crimevision-aq07.onrender.com' + '/api/map/notifications')
+    fetch('https://fuzzy-geese-lay.loca.lt' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
