@@ -34,6 +34,10 @@ export default function Login() {
       });
 
       if (!response.ok) {
+        if (response.status === 403) {
+            const errData = await response.json();
+            throw new Error(errData.detail || 'Your account is pending admin verification.');
+        }
         throw new Error('Invalid credentials');
       }
 
@@ -43,6 +47,8 @@ export default function Login() {
     } catch (err: any) {
       if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
         setError('Network error: Unable to connect to server. Please try again later.');
+      } else if (err.message.includes('admin verification')) {
+        setError(err.message);
       } else {
         setError('Email or Password has been wrong');
       }

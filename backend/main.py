@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import auth_api, dashboard_api
+from app.api import auth_api, dashboard_api, admin_api
 
 app = FastAPI(
     title="CrimeVision API",
@@ -18,6 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_api.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(admin_api.router, prefix="/api/admin", tags=["Administration"])
 app.include_router(dashboard_api.router, prefix="/api/dashboard", tags=["Dashboard"])
 
 from app.api import heatmap_api

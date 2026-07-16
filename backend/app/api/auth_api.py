@@ -16,6 +16,7 @@ class Token(BaseModel):
     token_type: str
 
 class UserProfile(BaseModel):
+    id: int
     email: str
     full_name: str
     role: UserRole
@@ -33,6 +34,11 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
+        )
+    if not user.is_verified_by_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your account is pending admin verification.",
         )
     
     access_token = create_access_token(data={"sub": user.email, "role": user.role})

@@ -22,7 +22,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 import AddFIRModal from '../components/AddFIRModal';
 import ViewFIRModal from '../components/ViewFIRModal';
-import { X, User as UserIcon, Mail, Shield, Loader2, CheckCircle, Plus, FileText, ChevronDown, Check } from 'lucide-react';
+import { VerifyUsersModal } from '../components/VerifyUsersModal';
+import { X, User as UserIcon, Mail, Shield, Loader2, CheckCircle, Plus, FileText, ChevronDown, Check, UserCheck } from 'lucide-react';
 const navItems = [
   { path: '/dashboard', label: 'Main Dashboard', icon: LayoutDashboard },
   { path: '/heatmap', label: 'Geospatial Map', icon: Map },
@@ -37,6 +38,7 @@ export default function MainLayout() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const [isVerifyUsersOpen, setIsVerifyUsersOpen] = useState(false);
   const [isAddFIROpen, setIsAddFIROpen] = useState(false);
   const [isViewFIROpen, setIsViewFIROpen] = useState(false);
   const [selectedFIRData, setSelectedFIRData] = useState<any>(null);
@@ -263,6 +265,15 @@ export default function MainLayout() {
           </div>
           
           <div className="flex items-center gap-4">
+            {user?.email === 'admin@ksp.gov.in' && (
+              <button 
+                onClick={() => setIsVerifyUsersOpen(true)}
+                className="hidden lg:flex items-center gap-1 px-4 py-1.5 bg-transparent hover:bg-emerald-600/10 text-emerald-500 border-2 border-emerald-600/50 hover:border-emerald-500 rounded-md text-sm font-bold transition-colors tracking-wide"
+              >
+                <UserCheck className="h-4 w-4" />
+                VERIFY USERS
+              </button>
+            )}
             <button 
               onClick={() => setIsAddFIROpen(true)}
               className="hidden lg:flex items-center gap-1 px-4 py-1.5 bg-transparent hover:bg-blue-600/10 text-blue-500 border-2 border-blue-600/50 hover:border-blue-500 rounded-md text-sm font-bold transition-colors tracking-wide"
@@ -359,6 +370,9 @@ export default function MainLayout() {
         
         <AddFIRModal isOpen={isAddFIROpen} onClose={() => setIsAddFIROpen(false)} />
         <ViewFIRModal isOpen={isViewFIROpen} onClose={() => setIsViewFIROpen(false)} firData={selectedFIRData} />
+        {isVerifyUsersOpen && (
+          <VerifyUsersModal onClose={() => setIsVerifyUsersOpen(false)} />
+        )}
         
         {/* Profile Dialog */}
         {isProfileOpen && (
