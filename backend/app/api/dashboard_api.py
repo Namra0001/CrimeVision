@@ -281,7 +281,6 @@ def get_dashboard_stats(year: Optional[str] = 'All', district: Optional[str] = '
         ai_insights["recommendations"] = ai_data.get("recommendations", [])
     except Exception as e:
         print(f"Fell back to dynamic dataset summary due to AI quota: {e}")
-    finally:
         # Dynamic fallback using actual dataset values
         ai_insights = {
             "system_health": "99.9% Online",
