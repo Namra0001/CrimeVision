@@ -17,3 +17,5 @@ langchain-google-genai
 langchain-community
 
 python-multipart
+
+geoalchemy2
