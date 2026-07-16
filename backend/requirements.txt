@@ -19,3 +19,8 @@ langchain-community
 python-multipart
 
 geoalchemy2
+
+deep-translator
+openpyxl
+python-dateutil
+requests
