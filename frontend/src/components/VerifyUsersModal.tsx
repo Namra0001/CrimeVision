@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getUnverifiedUsers, verifyUserByAdmin, UnverifiedUser } from '../lib/adminApi';
+import { getUnverifiedUsers, verifyUserByAdmin, type UnverifiedUser } from '../lib/adminApi';
 
 interface VerifyUsersModalProps {
   onClose: () => void;
