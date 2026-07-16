@@ -282,16 +282,28 @@ def get_dashboard_stats(year: Optional[str] = 'All', district: Optional[str] = '
     except Exception as e:
         print(f"Fell back to dynamic dataset summary due to AI quota: {e}")
         # Dynamic fallback using actual dataset values
-        ai_insights = {
-            "system_health": "99.9% Online",
-            "prediction_confidence": "87%",
-            "intelligence_summary": f"In {target_year}, {curr_total} cases were registered. {best_district} is currently the safest district. However, targeted enforcement is required in {worst_district} due to heightened activity.",
-            "recommendations": [
-                {"title": "Deploy Pink Patrols", "reason": f"Women's safety score is {curr_safety_score}% in {worst_district}", "priority": "High"},
-                {"title": "Fast-track Cyber Investigations", "reason": f"{curr_cyber} cyber cases logged this year", "priority": "Medium"},
-                {"title": "Clear Pending Cases", "reason": f"{curr_pending} cases remain under investigation", "priority": "Critical"}
-            ]
-        }
+        if lang == 'kn':
+            ai_insights = {
+                "system_health": "99.9% ಆನ್‌ಲೈನ್",
+                "prediction_confidence": "87%",
+                "intelligence_summary": f"{target_year} ರಲ್ಲಿ {curr_total} ಪ್ರಕರಣಗಳು ದಾಖಲಾಗಿವೆ. {best_district} ಪ್ರಸ್ತುತ ಸುರಕ್ಷಿತ ಜಿಲ್ಲೆಯಾಗಿದೆ. ಆದರೆ, {worst_district} ಜಿಲ್ಲೆಯಲ್ಲಿ ಹೆಚ್ಚಿನ ಚಟುವಟಿಕೆಯಿಂದಾಗಿ ಕಟ್ಟುನಿಟ್ಟಿನ ಕ್ರಮದ ಅಗತ್ಯವಿದೆ.",
+                "recommendations": [
+                    {"title": "ಪಿಂಕ್ ಗಸ್ತು ನಿಯೋಜಿಸಿ", "reason": f"{worst_district} ನಲ್ಲಿ ಮಹಿಳಾ ಸುರಕ್ಷತಾ ಸ್ಕೋರ್ {curr_safety_score}% ರಷ್ಟಿದೆ", "priority": "High"},
+                    {"title": "ಸೈಬರ್ ತನಿಖೆಗಳನ್ನು ತ್ವರಿತಗೊಳಿಸಿ", "reason": f"ಈ ವರ್ಷ {curr_cyber} ಸೈಬರ್ ಪ್ರಕರಣಗಳು ದಾಖಲಾಗಿವೆ", "priority": "Medium"},
+                    {"title": "ಬಾಕಿ ಇರುವ ಪ್ರಕರಣಗಳನ್ನು ಇತ್ಯರ್ಥಗೊಳಿಸಿ", "reason": f"{curr_pending} ಪ್ರಕರಣಗಳು ತನಿಖೆಯ ಹಂತದಲ್ಲಿವೆ", "priority": "Critical"}
+                ]
+            }
+        else:
+            ai_insights = {
+                "system_health": "99.9% Online",
+                "prediction_confidence": "87%",
+                "intelligence_summary": f"In {target_year}, {curr_total} cases were registered. {best_district} is currently the safest district. However, targeted enforcement is required in {worst_district} due to heightened activity.",
+                "recommendations": [
+                    {"title": "Deploy Pink Patrols", "reason": f"Women's safety score is {curr_safety_score}% in {worst_district}", "priority": "High"},
+                    {"title": "Fast-track Cyber Investigations", "reason": f"{curr_cyber} cyber cases logged this year", "priority": "Medium"},
+                    {"title": "Clear Pending Cases", "reason": f"{curr_pending} cases remain under investigation", "priority": "Critical"}
+                ]
+            }
 
     # Charts
     # Trend Data (12 Months for a given year)
