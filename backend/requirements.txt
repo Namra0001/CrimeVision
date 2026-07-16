@@ -11,3 +11,7 @@ pandas
 numpy
 joblib
 langchain-openai
+
+pydantic-settings
+langchain-google-genai
+langchain-community
