@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser = async (authToken: string) => {
     try {
-      const response = await fetch('https://crimevision-api.loca.lt' + '/api/auth/me', {
+      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }

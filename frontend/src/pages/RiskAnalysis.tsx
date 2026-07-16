@@ -52,7 +52,7 @@ export default function RiskAnalysis() {
   useEffect(() => {
     const fetchLatestIntercept = async () => {
       try {
-        const res = await fetch('https://crimevision-api.loca.lt' + '/api/alerts/latest-intercept');
+        const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/alerts/latest-intercept');
         if (res.ok) {
           const data = await res.json();
           if (data) {
@@ -109,7 +109,7 @@ export default function RiskAnalysis() {
   const handleRouteRequest = async (from: string, to: string) => {
     setLoading(true);
     try {
-      const res = await fetch('https://crimevision-api.loca.lt' + '/api/risk/route', {
+      const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/risk/route', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -142,9 +142,9 @@ export default function RiskAnalysis() {
     }
     try {
       const [sumRes, hotRes, recRes] = await Promise.all([
-        fetch(`https://crimevision-api.loca.lt/api/risk/summary?layer=${layer}&month=${month}&lang=${language}`),
-        fetch(`https://crimevision-api.loca.lt/api/risk/hotspots?layer=${layer}&month=${month}&lang=${language}`),
-        fetch(`https://crimevision-api.loca.lt/api/risk/recommendations?layer=${layer}&month=${month}&lang=${language}`)
+        fetch(`https://crimevision-aq07.onrender.com/api/risk/summary?layer=${layer}&month=${month}&lang=${language}`),
+        fetch(`https://crimevision-aq07.onrender.com/api/risk/hotspots?layer=${layer}&month=${month}&lang=${language}`),
+        fetch(`https://crimevision-aq07.onrender.com/api/risk/recommendations?layer=${layer}&month=${month}&lang=${language}`)
       ]);
       
       const sumData = sumRes.ok ? await sumRes.json() : null;

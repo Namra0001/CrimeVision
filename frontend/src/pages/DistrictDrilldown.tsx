@@ -54,7 +54,7 @@ export default function DistrictDrilldown() {
   const [expandedFeature, setExpandedFeature] = useState<number | null>(1); // 1 = Health Score open by default
 
   useEffect(() => {
-    fetch('https://crimevision-api.loca.lt' + '/api/district/hierarchy')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/district/hierarchy')
       .then(res => res.json())
       .then(data => {
         setHierarchy(data);
@@ -73,7 +73,7 @@ export default function DistrictDrilldown() {
     if (!selectedDistrict) return;
     
     setStatsLoading(true);
-    let url = `https://crimevision-api.loca.lt/api/district/stats?district_id=${selectedDistrict.id}`;
+    let url = `https://crimevision-aq07.onrender.com/api/district/stats?district_id=${selectedDistrict.id}`;
     if (selectedStation) {
       url += `&station_id=${selectedStation.id}`;
     }
@@ -90,7 +90,7 @@ export default function DistrictDrilldown() {
       });
       
     setInsightsLoading(true);
-    let insightUrl = `https://crimevision-api.loca.lt/api/district/advanced-insights?district_id=${selectedDistrict.id}&lang=${language}`;
+    let insightUrl = `https://crimevision-aq07.onrender.com/api/district/advanced-insights?district_id=${selectedDistrict.id}&lang=${language}`;
     if (selectedStation) {
       insightUrl += `&station_id=${selectedStation.id}`;
     }
@@ -106,7 +106,7 @@ export default function DistrictDrilldown() {
       });
       
     if (selectedStation) {
-      fetch(`https://crimevision-api.loca.lt/api/district/personnel?station_id=${selectedStation.id}`)
+      fetch(`https://crimevision-aq07.onrender.com/api/district/personnel?station_id=${selectedStation.id}`)
         .then(res => res.json())
         .then(data => setPersonnel(data));
     } else {

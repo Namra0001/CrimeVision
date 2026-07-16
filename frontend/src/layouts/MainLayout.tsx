@@ -63,7 +63,7 @@ export default function MainLayout() {
 
   const handleFIRClick = async (crimeNo: string) => {
     try {
-      const res = await fetch(`https://crimevision-api.loca.lt/api/fir/details/${encodeURIComponent(crimeNo)}`);
+      const res = await fetch(`https://crimevision-aq07.onrender.com/api/fir/details/${encodeURIComponent(crimeNo)}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedFIRData(data);
@@ -76,7 +76,7 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    fetch('https://crimevision-api.loca.lt' + '/api/map/notifications')
+    fetch('https://crimevision-aq07.onrender.com' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -91,7 +91,7 @@ export default function MainLayout() {
 
     const delayDebounceFn = setTimeout(() => {
       setIsSearching(true);
-      fetch(`https://crimevision-api.loca.lt/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
+      fetch(`https://crimevision-aq07.onrender.com/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => {
           setSearchResults(data);
