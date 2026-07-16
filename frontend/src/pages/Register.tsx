@@ -45,6 +45,21 @@ export default function Register() {
         throw new Error(errorData.detail || 'Failed to register');
       }
 
+      // Also register in Supabase Auth to show up in the dashboard
+      const { error: supabaseError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: userName,
+            role: role
+          }
+        }
+      });
+      if (supabaseError) {
+        console.warn('Supabase auth warning:', supabaseError);
+      }
+
       setOtpSent(true);
       setSuccess('OTP sent to your email. Please check your inbox.');
     } catch (err: any) {
