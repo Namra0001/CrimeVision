@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     
     # DATABASE
     # Using a placeholder for local development. Will be overridden by environment variable for Supabase.
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/crimevision")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///crimevision.db")
 
     # JWT Authentication
     SECRET_KEY: str = os.getenv("SECRET_KEY", "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7")
