@@ -28,7 +28,7 @@ export default function TrendAlerts() {
     setSelectedAlert(alert);
     setDetailsLoading(true);
     setActiveTab('Overview');
-    fetch(`https://crimevision-aq07.onrender.com/api/alerts/${alert.id}/details`)
+    fetch(`http://localhost:8000/api/alerts/${alert.id}/details`)
       .then(res => res.json())
       .then(data => {
         setAlertDetails(data);
@@ -46,7 +46,7 @@ export default function TrendAlerts() {
   };
 
   useEffect(() => {
-    fetch('https://crimevision-aq07.onrender.com' + '/api/alerts')
+    fetch('http://localhost:8000' + '/api/alerts')
       .then(res => res.json())
       .then(data => {
         const localStatuses = JSON.parse(localStorage.getItem('alertStatuses') || '{}');

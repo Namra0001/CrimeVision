@@ -33,6 +33,10 @@ export default function Chat() {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   
+  const getAuthHeaders = () => ({
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  });
+  
   // Conversations State
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -62,7 +66,7 @@ export default function Chat() {
   const handleRename = async (id: string, newTitle: string) => {
     if (newTitle.trim()) {
       try {
-        await axios.put(`https://crimevision-aq07.onrender.com/api/chat/conversations/${id}`, { title: newTitle });
+        await axios.put(`http://localhost:8000/api/chat/conversations/${id}`, { title: newTitle }, getAuthHeaders());
         fetchConversations();
       } catch (e) {
         console.error('Failed to rename', e);
@@ -88,7 +92,7 @@ export default function Chat() {
 
   const fetchConversations = async () => {
     try {
-      const res = await axios.get('https://crimevision-aq07.onrender.com' + '/api/chat/conversations');
+      const res = await axios.get('http://localhost:8000' + '/api/chat/conversations', getAuthHeaders());
       setConversations(res.data);
     } catch (e) {
       console.error("Failed to fetch conversations", e);
@@ -98,7 +102,7 @@ export default function Chat() {
   const loadConversation = async (id: string) => {
     setSessionId(id);
     try {
-      const res = await axios.get(`https://crimevision-aq07.onrender.com/api/chat/conversations/${id}`);
+      const res = await axios.get(`http://localhost:8000/api/chat/conversations/${id}`, getAuthHeaders());
       setMessages(res.data);
       if (window.innerWidth < 768) setIsSidebarOpen(false);
     } catch (e) {
@@ -175,11 +179,11 @@ export default function Chat() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://crimevision-aq07.onrender.com' + '/api/chat/ask', {
+      const response = await axios.post('http://localhost:8000' + '/api/chat/ask', {
         message: userMessage,
         conversation_id: sessionId,
         language: language
-      });
+      }, getAuthHeaders());
       
       setSessionId(response.data.conversation_id);
       setMessages(response.data.history);
@@ -279,7 +283,7 @@ export default function Chat() {
   const performDelete = async () => {
     if (!deleteConfirmId) return;
     try {
-      await axios.delete(`https://crimevision-aq07.onrender.com/api/chat/conversations/${deleteConfirmId}`);
+      await axios.delete(`http://localhost:8000/api/chat/conversations/${deleteConfirmId}`, getAuthHeaders());
       fetchConversations();
       if (sessionId === deleteConfirmId) createNewChat();
     } catch (error) {
@@ -291,9 +295,9 @@ export default function Chat() {
   const togglePin = async (id: string, currentPin: boolean, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await axios.put(`https://crimevision-aq07.onrender.com/api/chat/conversations/${id}`, {
+      await axios.put(`http://localhost:8000/api/chat/conversations/${id}`, {
         is_pinned: !currentPin
-      });
+      }, getAuthHeaders());
       fetchConversations();
     } catch (error) {
       console.error("Failed to pin", error);
@@ -311,8 +315,11 @@ export default function Chat() {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('https://crimevision-aq07.onrender.com' + '/api/dataset/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      const response = await axios.post('http://localhost:8000' + '/api/dataset/upload', formData, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
       });
       setMessages(prev => [...prev, { 
         role: 'assistant', 

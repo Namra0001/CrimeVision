@@ -22,6 +22,7 @@ class UserProfile(BaseModel):
     role: UserRole
     station_id: Optional[int]
     district_id: Optional[int]
+    avatar_url: Optional[str]
     
     class Config:
         from_attributes = True
@@ -35,6 +36,16 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if user.status == "rejected":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="ADMIN REJECT YOUR VARIFICATION, TRY AGAIN",
+        )
+    if user.status == "removed":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your account has been removed by the admin.",
+        )
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -43,7 +54,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     if not user.is_verified_by_admin:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Your account is pending admin verification.",
+            detail="Admin has not verified you. Please wait until verification.",
         )
     
     access_token = create_access_token(data={"sub": user.email, "role": user.role})
@@ -52,6 +63,15 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 @router.get("/me", response_model=UserProfile)
 def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+class UpdateAvatarRequest(BaseModel):
+    avatar_url: str
+
+@router.put("/update-avatar")
+def update_avatar(req: UpdateAvatarRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    current_user.avatar_url = req.avatar_url
+    db.commit()
+    return {"message": "Avatar updated successfully"}
 
 # Added Registration, OTP, Forgot Password
 import random
@@ -81,8 +101,24 @@ class ResetPasswordRequest(BaseModel):
 def register_user(req: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == req.email).first()
     if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
+        if existing.is_active:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        else:
+            # User exists but email is not verified. Update their details.
+            existing.full_name = req.email.split('@')[0]
+            existing.hashed_password = get_password_hash(req.password)
+            existing.role = req.role
+    else:
+        # Store new user with inactive state, wait for OTP
+        new_user = User(
+            email=req.email,
+            full_name=req.email.split('@')[0],
+            hashed_password=get_password_hash(req.password),
+            role=req.role,
+            is_active=False
+        )
+        db.add(new_user)
+        
     otp = str(random.randint(100000, 999999))
     otp_hash = get_password_hash(otp)
     expires = datetime.utcnow() + timedelta(minutes=10)
@@ -90,15 +126,6 @@ def register_user(req: RegisterRequest, db: Session = Depends(get_db)):
     otp_entry = OTPVerification(email=req.email, otp_hash=otp_hash, expires_at=expires, purpose="register")
     db.add(otp_entry)
     
-    # Store user with inactive state, wait for OTP
-    new_user = User(
-        email=req.email,
-        full_name=req.email.split('@')[0],
-        hashed_password=get_password_hash(req.password),
-        role=req.role,
-        is_active=False
-    )
-    db.add(new_user)
     db.commit()
     
     send_otp_email(req.email, otp, purpose="register")

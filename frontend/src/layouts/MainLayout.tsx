@@ -22,8 +22,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 import AddFIRModal from '../components/AddFIRModal';
 import ViewFIRModal from '../components/ViewFIRModal';
-import { VerifyUsersModal } from '../components/VerifyUsersModal';
-import { X, User as UserIcon, Mail, Shield, Loader2, CheckCircle, Plus, FileText, ChevronDown, Check, UserCheck } from 'lucide-react';
+import { ManageUsersModal } from '../components/ManageUsersModal';
+import { getUnverifiedUsers } from '../lib/adminApi';
+import { X, User as UserIcon, Mail, Shield, Loader2, CheckCircle, Plus, FileText, ChevronDown, Check, UserCheck, Users as UsersIcon, Edit2 } from 'lucide-react';
 const navItems = [
   { path: '/dashboard', label: 'Main Dashboard', icon: LayoutDashboard },
   { path: '/heatmap', label: 'Geospatial Map', icon: Map },
@@ -38,9 +39,11 @@ export default function MainLayout() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
-  const [isVerifyUsersOpen, setIsVerifyUsersOpen] = useState(false);
+  const [isManageUsersOpen, setIsManageUsersOpen] = useState(false);
   const [isAddFIROpen, setIsAddFIROpen] = useState(false);
   const [isViewFIROpen, setIsViewFIROpen] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false);
   const [selectedFIRData, setSelectedFIRData] = useState<any>(null);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
@@ -54,6 +57,55 @@ export default function MainLayout() {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
 
+  const getAvatarForRole = (roleStr?: string) => {
+    const role = (roleStr || user?.role || '').toLowerCase();
+    if (role.includes('constable')) return '/avatars/constable.jpg';
+    if (role.includes('dgp') || role.includes('director general')) return '/avatars/dgp.jpg';
+    if (role.includes('sp') || role.includes('superintendent')) return '/avatars/sp.jpg';
+    if (role.includes('analyst')) return '/avatars/analyst.jpg';
+    return '/avatars/inspector.jpg'; // default
+  };
+
+  const getAvailableAvatars = () => {
+    const role = (user?.role || '').toLowerCase();
+    let prefix = 'inspector';
+    if (role.includes('constable')) prefix = 'constable';
+    if (role.includes('dgp') || role.includes('director general')) prefix = 'dgp';
+    if (role.includes('sp') || role.includes('superintendent')) prefix = 'sp';
+    if (role.includes('analyst')) prefix = 'analyst';
+    
+    return [
+      `/avatars/${prefix}.jpg`,
+      `/avatars/${prefix}_2.jpg`,
+      `/avatars/${prefix}_3.jpg`,
+      `/avatars/${prefix}_4.jpg`,
+      `/avatars/${prefix}_5.jpg`,
+    ];
+  };
+
+  const updateAvatar = async (url: string) => {
+    setIsUpdatingAvatar(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:8000/api/auth/update-avatar', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ avatar_url: url })
+      });
+      if (res.ok) {
+        // Force reload to get updated user profile
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error("Failed to update avatar", e);
+    } finally {
+      setIsUpdatingAvatar(false);
+    }
+  };
+
   const [notifications, setNotifications] = useState<any[]>([]);
   const [hasViewedNotifications, setHasViewedNotifications] = useState(false);
   
@@ -63,9 +115,22 @@ export default function MainLayout() {
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
+  const [pendingUsersCount, setPendingUsersCount] = useState(0);
+
+  useEffect(() => {
+    if (user?.email === 'admin@ksp.gov.in') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        getUnverifiedUsers(token)
+          .then(data => setPendingUsersCount(data.length))
+          .catch(err => console.error("Error fetching pending users", err));
+      }
+    }
+  }, [user, isManageUsersOpen]);
+
   const handleFIRClick = async (crimeNo: string) => {
     try {
-      const res = await fetch(`https://crimevision-aq07.onrender.com/api/fir/details/${encodeURIComponent(crimeNo)}`);
+      const res = await fetch(`http://localhost:8000/api/fir/details/${encodeURIComponent(crimeNo)}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedFIRData(data);
@@ -78,7 +143,7 @@ export default function MainLayout() {
   };
 
   useEffect(() => {
-    fetch('https://crimevision-aq07.onrender.com' + '/api/map/notifications')
+    fetch('http://localhost:8000' + '/api/map/notifications')
       .then(res => res.json())
       .then(data => setNotifications(data))
       .catch(err => console.error("Error fetching notifications", err));
@@ -93,7 +158,7 @@ export default function MainLayout() {
 
     const delayDebounceFn = setTimeout(() => {
       setIsSearching(true);
-      fetch(`https://crimevision-aq07.onrender.com/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
+      fetch(`http://localhost:8000/api/dashboard/search?q=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => {
           setSearchResults(data);
@@ -185,7 +250,10 @@ export default function MainLayout() {
                 </span>
               </div>
             </button>
-            <div className="relative hidden md:block">
+            <div className="relative hidden md:block group">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-300" />
+              </div>
               <input 
                 type="text" 
                 placeholder="Search FIRs, Crime, Stations..." 
@@ -196,9 +264,8 @@ export default function MainLayout() {
                 }}
                 onFocus={() => setShowSearchResults(true)}
                 onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
-                className="pl-4 pr-10 py-2 bg-secondary rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary w-[450px] text-secondary-foreground"
+                className="pl-10 pr-4 py-2 bg-secondary/40 backdrop-blur-md border border-border/50 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 w-[400px] focus:w-[500px] transition-all duration-300 text-foreground placeholder:text-muted-foreground shadow-sm hover:bg-secondary/60"
               />
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               
               {/* Search Results Dropdown */}
               {showSearchResults && searchQuery.length >= 2 && (
@@ -267,11 +334,16 @@ export default function MainLayout() {
           <div className="flex items-center gap-4">
             {user?.email === 'admin@ksp.gov.in' && (
               <button 
-                onClick={() => setIsVerifyUsersOpen(true)}
-                className="hidden lg:flex items-center gap-1 px-4 py-1.5 bg-transparent hover:bg-emerald-600/10 text-emerald-500 border-2 border-emerald-600/50 hover:border-emerald-500 rounded-md text-sm font-bold transition-colors tracking-wide"
+                onClick={() => setIsManageUsersOpen(true)}
+                className="hidden lg:flex relative items-center gap-1 px-4 py-1.5 bg-transparent hover:bg-emerald-600/10 text-emerald-500 border-2 border-emerald-600/50 hover:border-emerald-500 rounded-md text-sm font-bold transition-colors tracking-wide"
               >
-                <UserCheck className="h-4 w-4" />
-                VERIFY USERS
+                <UsersIcon className="h-4 w-4" />
+                MANAGE USERS
+                {pendingUsersCount > 0 && (
+                  <span className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded-full border-2 border-card">
+                    {pendingUsersCount}
+                  </span>
+                )}
               </button>
             )}
             <button 
@@ -355,12 +427,12 @@ export default function MainLayout() {
               className="flex items-center gap-3 text-left hover:bg-secondary/50 p-1.5 rounded-lg transition-colors"
             >
               <div className="hidden md:flex flex-col items-end">
-                <span className="text-sm font-bold leading-none text-foreground">{user?.name || 'SP Admin'}</span>
+                <span className="text-sm font-bold leading-none text-foreground">{user?.full_name || 'SP Admin'}</span>
                 <span className="text-[10px] text-muted-foreground mt-1">{user?.role || 'Super Admin'}</span>
               </div>
               <div className="relative">
                 <div className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center border border-border overflow-hidden">
-                  <img src="/avatar.png" alt="Avatar" className="h-full w-full object-cover bg-white" />
+                  <img src={user?.avatar_url || getAvatarForRole()} alt="Avatar" className="h-full w-full object-cover bg-white" />
                 </div>
                 <div className="absolute bottom-0 right-0 h-2.5 w-2.5 bg-green-500 border-2 border-card rounded-full"></div>
               </div>
@@ -370,8 +442,8 @@ export default function MainLayout() {
         
         <AddFIRModal isOpen={isAddFIROpen} onClose={() => setIsAddFIROpen(false)} />
         <ViewFIRModal isOpen={isViewFIROpen} onClose={() => setIsViewFIROpen(false)} firData={selectedFIRData} />
-        {isVerifyUsersOpen && (
-          <VerifyUsersModal onClose={() => setIsVerifyUsersOpen(false)} />
+        {isManageUsersOpen && (
+          <ManageUsersModal onClose={() => setIsManageUsersOpen(false)} />
         )}
         
         {/* Profile Dialog */}
@@ -386,8 +458,20 @@ export default function MainLayout() {
               </button>
               
               <div className="flex flex-col items-center mb-6 mt-2">
-                <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 text-3xl font-bold text-primary mb-4">
-                  {getInitials()}
+                <div className="relative group">
+                  <div className="h-24 w-24 rounded-full bg-secondary flex items-center justify-center border-4 border-primary/20 overflow-hidden mb-4 transition-transform group-hover:scale-105">
+                    <img src={user?.avatar_url || getAvatarForRole()} alt="Avatar" className="h-full w-full object-cover bg-white" />
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      setShowAvatarPicker(true);
+                    }} 
+                    className="absolute bottom-4 right-0 h-8 w-8 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center text-white border-2 border-card shadow-lg opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                    title="Change Avatar"
+                  >
+                    <Edit2 className="h-4 w-4" />
+                  </button>
                 </div>
                 <h2 className="text-xl font-bold text-foreground">{user?.full_name || 'Officer'}</h2>
               </div>
@@ -421,6 +505,54 @@ export default function MainLayout() {
                   Logout
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Avatar Picker Dialog */}
+        {showAvatarPicker && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-sm">
+            <div className="bg-card border border-border rounded-xl shadow-2xl p-6 w-full max-w-lg relative animate-in fade-in zoom-in duration-200">
+              <button 
+                onClick={() => {
+                  setShowAvatarPicker(false);
+                  setIsProfileOpen(true);
+                }}
+                className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition-colors"
+                disabled={isUpdatingAvatar}
+              >
+                <X className="h-5 w-5" />
+              </button>
+              
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-foreground">Choose Your Avatar</h3>
+                <p className="text-sm text-muted-foreground mt-1">Select an avatar that matches your {user?.role} role</p>
+              </div>
+
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 mb-6">
+                {getAvailableAvatars().map((url, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => updateAvatar(url)}
+                    disabled={isUpdatingAvatar}
+                    className={`relative rounded-full overflow-hidden aspect-square border-4 transition-all ${user?.avatar_url === url || (!user?.avatar_url && idx === 0) ? 'border-blue-500 scale-105 shadow-lg shadow-blue-500/20' : 'border-transparent hover:border-border hover:scale-105'} ${isUpdatingAvatar ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <img src={url} alt={`Avatar option ${idx + 1}`} className="w-full h-full object-cover" />
+                    {(user?.avatar_url === url || (!user?.avatar_url && idx === 0)) && (
+                      <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
+                        <Check className="h-6 w-6 text-white drop-shadow-md" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {isUpdatingAvatar && (
+                <div className="flex items-center justify-center text-sm text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Updating your avatar...
+                </div>
+              )}
             </div>
           </div>
         )}

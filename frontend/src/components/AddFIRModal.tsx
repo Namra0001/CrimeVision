@@ -51,7 +51,7 @@ export default function AddFIRModal({ isOpen, onClose }: AddFIRModalProps) {
     if (!formData.brief_facts.trim()) return;
     setIsTranslating(true);
     try {
-      const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/fir/translate', {
+      const res = await fetch('http://localhost:8000' + '/api/fir/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: formData.brief_facts })
@@ -81,7 +81,7 @@ export default function AddFIRModal({ isOpen, onClose }: AddFIRModalProps) {
         accused_age: formData.accused_age ? parseInt(formData.accused_age) : null,
       };
 
-      const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/fir/add', {
+      const res = await fetch('http://localhost:8000' + '/api/fir/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -121,7 +121,7 @@ export default function AddFIRModal({ isOpen, onClose }: AddFIRModalProps) {
     formData.append('file', file);
 
     try {
-      const res = await fetch('https://crimevision-aq07.onrender.com' + '/api/fir/bulk-upload', {
+      const res = await fetch('http://localhost:8000' + '/api/fir/bulk-upload', {
         method: 'POST',
         body: formData,
       });
@@ -149,7 +149,7 @@ export default function AddFIRModal({ isOpen, onClose }: AddFIRModalProps) {
   };
 
   const handleDownloadTemplate = () => {
-    window.open('https://crimevision-aq07.onrender.com' + '/api/fir/bulk-template', '_blank');
+    window.open('http://localhost:8000' + '/api/fir/bulk-template', '_blank');
   };
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">

@@ -22,6 +22,7 @@ class User(Base):
     district_id = Column(Integer, nullable=True) # For SP
     status = Column(String, default="active")
     is_verified_by_admin = Column(Boolean(), default=False)
+    avatar_url = Column(String, nullable=True)
 
 class OTPVerification(Base):
     id = Column(Integer, primary_key=True, index=True)

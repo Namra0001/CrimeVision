@@ -34,7 +34,7 @@ export default function Register() {
       };
       const role = roleMap[position] || 'constable';
 
-      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/register', {
+      const response = await fetch('http://localhost:8000' + '/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role })
@@ -46,18 +46,22 @@ export default function Register() {
       }
 
       // Also register in Supabase Auth to show up in the dashboard
-      const { error: supabaseError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: userName,
-            role: role
+      try {
+        const { error: supabaseError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: userName,
+              role: role
+            }
           }
+        });
+        if (supabaseError) {
+          console.warn('Supabase auth warning:', supabaseError);
         }
-      });
-      if (supabaseError) {
-        console.warn('Supabase auth warning:', supabaseError);
+      } catch (subErr) {
+        console.warn('Supabase auth exception:', subErr);
       }
 
       setOtpSent(true);
@@ -76,7 +80,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/verify-registration', {
+      const response = await fetch('http://localhost:8000' + '/api/auth/verify-registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp })

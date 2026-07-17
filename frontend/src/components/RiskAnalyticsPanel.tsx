@@ -36,7 +36,7 @@ export function RiskAnalyticsPanel({ recommendations, layer, summary, currentMon
 
   useEffect(() => {
     if (activeTab === 'analytics') {
-      fetch(`https://crimevision-aq07.onrender.com/api/risk/analytics?layer=${layer}&lang=${language}`)
+      fetch(`http://localhost:8000/api/risk/analytics?layer=${layer}&lang=${language}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => setAnalytics(data && data.trend_data ? data : null))
         .catch(err => {

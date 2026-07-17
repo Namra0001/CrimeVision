@@ -69,12 +69,12 @@ def generate_title_task(db: Session, conversation_id: str, first_message: str):
 @router.get("/conversations", response_model=List[ConversationSchema])
 def list_conversations(
     db: Session = Depends(get_db),
-    # user = Depends(get_current_user) # Uncomment when auth is strict
+    current_user = Depends(get_current_user)
 ):
-    # Fetch all non-deleted conversations
-    # In a real app, filter by user.id
+    user_id_str = str(current_user.id)
     conversations = db.query(Conversation).filter(
-        Conversation.is_deleted == False
+        Conversation.is_deleted == False,
+        Conversation.user_id == user_id_str
     ).order_by(
         desc(Conversation.is_pinned), 
         desc(Conversation.updated_at)
@@ -85,18 +85,24 @@ def list_conversations(
 @router.post("/conversations", response_model=ConversationSchema)
 def create_conversation(
     db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
 ):
-    new_conv = Conversation(title="New Conversation")
+    new_conv = Conversation(title="New Conversation", user_id=str(current_user.id))
     db.add(new_conv)
     db.commit()
     db.refresh(new_conv)
     return new_conv
 
 @router.get("/conversations/{conversation_id}", response_model=List[ChatMessageSchema])
-def get_conversation_history(conversation_id: str, db: Session = Depends(get_db)):
+def get_conversation_history(
+    conversation_id: str, 
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
     conv = db.query(Conversation).filter(
         Conversation.id == conversation_id, 
-        Conversation.is_deleted == False
+        Conversation.is_deleted == False,
+        Conversation.user_id == str(current_user.id)
     ).first()
     
     if not conv:
@@ -108,9 +114,13 @@ def get_conversation_history(conversation_id: str, db: Session = Depends(get_db)
 def update_conversation(
     conversation_id: str, 
     update_data: UpdateConversationRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
 ):
-    conv = db.query(Conversation).filter(Conversation.id == conversation_id).first()
+    conv = db.query(Conversation).filter(
+        Conversation.id == conversation_id,
+        Conversation.user_id == str(current_user.id)
+    ).first()
     if not conv:
         raise HTTPException(status_code=404, detail="Conversation not found")
         
@@ -124,8 +134,15 @@ def update_conversation(
     return {"status": "success"}
 
 @router.delete("/conversations/{conversation_id}")
-def delete_conversation(conversation_id: str, db: Session = Depends(get_db)):
-    conv = db.query(Conversation).filter(Conversation.id == conversation_id).first()
+def delete_conversation(
+    conversation_id: str, 
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
+    conv = db.query(Conversation).filter(
+        Conversation.id == conversation_id,
+        Conversation.user_id == str(current_user.id)
+    ).first()
     if not conv:
         raise HTTPException(status_code=404, detail="Conversation not found")
         
@@ -137,20 +154,24 @@ def delete_conversation(conversation_id: str, db: Session = Depends(get_db)):
 def ask_question(
     request: ChatRequest, 
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
 ):
     start_time = time.time()
     
     # 1. Get or Create Conversation
     conversation_id = request.conversation_id
     if not conversation_id:
-        conv = Conversation(title="New Conversation")
+        conv = Conversation(title="New Conversation", user_id=str(current_user.id))
         db.add(conv)
         db.commit()
         db.refresh(conv)
         conversation_id = conv.id
     else:
-        conv = db.query(Conversation).filter(Conversation.id == conversation_id).first()
+        conv = db.query(Conversation).filter(
+            Conversation.id == conversation_id,
+            Conversation.user_id == str(current_user.id)
+        ).first()
         if not conv:
             raise HTTPException(status_code=404, detail="Conversation not found")
             

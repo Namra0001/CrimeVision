@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser = async (authToken: string) => {
     try {
-      const response = await fetch('https://crimevision-aq07.onrender.com' + '/api/auth/me', {
+      const response = await fetch('http://localhost:8000' + '/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }
